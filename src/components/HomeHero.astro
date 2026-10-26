@@ -1,0 +1,196 @@
+---
+import { Picture } from 'astro:assets';
+import hero from '../assets/photos/hero.jpg';
+import Header from './Header.astro';
+import Button from './Button.astro';
+import LinkRing from './LinkRing.astro';
+import GlassPanel from './GlassPanel.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = t(lang);
+const h = tr.home.hero;
+---
+<div class="frame">
+  <div class="hero">
+    <Picture
+      src={hero}
+      alt={tr.home.heroImageAlt}
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="bg"
+      pictureAttributes={{ class: 'bg-wrap' }}
+    />
+    <div class="scrim" aria-hidden="true"></div>
+
+    <Header lang={lang} routeId="home" variant="overlay" auditHref="#audit" />
+
+    <div class="body">
+      <div class="copy">
+        <h1 class="wide">{h.h1}</h1>
+        <p class="sub">{h.sub}</p>
+        <LinkRing href="#werk" class="ring-link">{h.work}</LinkRing>
+        <GlassPanel as="aside" class="panel">
+          <h2 class="wide">{h.panelTitle}</h2>
+          <p>{h.panelText}</p>
+          <Button href="#audit" class="cta" data-hero-cta>{h.cta}</Button>
+        </GlassPanel>
+      </div>
+    </div>
+
+    <ul class="facts">
+      {h.facts.map((f) => (
+        <li>
+          <span class="big wide">{f.big}</span>
+          <span class="small"><span class="d">{f.small}</span><span class="m">{f.smallPhone}</span></span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<div class="rail" aria-hidden="true">
+  <span class="rail-label" data-rail-label></span>
+  <span data-rail-current>01</span><span class="rail-line"></span><span>10</span>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const ac = new AbortController();
+    const { signal } = ac;
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+
+    const rail = document.querySelector<HTMLElement>('.rail');
+    if (rail) {
+      const cur = rail.querySelector<HTMLElement>('[data-rail-current]')!;
+      const label = rail.querySelector<HTMLElement>('[data-rail-label]')!;
+      const chapters: { n: string; label: string; el: Element }[] = [];
+      const hero = document.querySelector('.hero');
+      if (hero) chapters.push({ n: '01', label: '', el: hero });
+      document.querySelectorAll('.eyebrow').forEach((e) => {
+        const m = (e.textContent || '').match(/^(\d\d)\s*—\s*(.*)$/);
+        const sec = e.closest('section');
+        if (m && sec && m[1] !== '01') chapters.push({ n: m[1], label: m[2], el: sec });
+      });
+      const closing = document.querySelector('.closing-grid')?.closest('section');
+      if (closing) chapters.push({ n: '10', label: '', el: closing });
+
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+        rail.style.setProperty('--p', String(p));
+        // Start at section 02, scroll with the page, then lock to the vertical middle.
+        const r2 = chapters[1]?.el.getBoundingClientRect();
+        const start = r2 ? r2.top + r2.height / 2 : 0;
+        rail.style.setProperty('--y', Math.max(window.innerHeight / 2, start) + 'px');
+        const line = window.innerHeight * 0.4;
+        let active = chapters[0];
+        for (const c of chapters) if (c.el.getBoundingClientRect().top <= line) active = c;
+        if (active) {
+          cur.textContent = active.n;
+          label.textContent = active.label;
+        }
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      window.addEventListener('scroll', onScroll, { passive: true, signal });
+      window.addEventListener('resize', onScroll, { signal });
+      update();
+    }
+  });
+</script>
+
+<style>
+  .frame { background: var(--surface-2); }
+  .hero {
+    position: relative; display: flex; flex-direction: column; overflow: hidden;
+    min-height: 780px;
+    background: #1d2427; isolation: isolate;
+  }
+  .hero :global(.bg-wrap) { position: absolute; inset: 0; display: block; z-index: -2; }
+  .hero :global(.bg) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  .scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(0deg, rgba(8,10,12,.92) 0%, rgba(8,10,12,.55) 55%, rgba(8,10,12,.25) 100%);
+  }
+  .body { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 56px 20px 28px; }
+  .copy { display: flex; flex-direction: column; gap: 22px; align-items: stretch; }
+  h1 { margin: 0; font-size: 27px; line-height: 1.12; font-weight: 700; }
+  .sub { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-2); }
+  .copy :global(.ring-link) { order: 2; }
+  .copy :global(.panel) { order: 1; background: none; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .copy :global(.panel) :global(h2), .copy :global(.panel) :global(p) { display: none; }
+  .copy :global(.ring-link) { align-self: flex-start; }
+  .copy :global(.ring) { width: 48px; height: 48px; }
+
+  .rail { display: none; }
+
+  .facts {
+    list-style: none; margin: 0; padding: 20px 20px 0; position: relative;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+    border-top: 1px solid rgba(255, 255, 255, .18); margin: 0 20px 28px;
+    padding-inline: 0;
+  }
+  .big { display: block; font-size: 12px; font-weight: 700; }
+  .small { font-size: 12px; color: var(--text-3); }
+  .d { display: none; }
+
+  @media (min-width: 820px) {
+    .frame { padding: clamp(0px, 2.4vw, 36px); }
+    .hero { min-height: 820px; border-radius: clamp(0px, 1.4vw, 18px); box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
+    .scrim {
+      background:
+        linear-gradient(90deg, rgba(8,10,12,.78) 0%, rgba(8,10,12,.2) 65%),
+        linear-gradient(0deg, rgba(8,10,12,.85) 0%, rgba(8,10,12,0) 40%);
+    }
+    .body { justify-content: center; padding: 120px clamp(20px, 8vw, 120px) 40px; }
+    .copy { max-width: 760px; gap: 32px; align-items: flex-start; }
+    h1 { font-size: var(--fs-display-1); line-height: 1.08; }
+    .sub { max-width: 500px; font-size: 18px; }
+    .copy :global(.panel), .copy :global(.ring-link) { order: 0; }
+    .copy :global(.cta) { min-height: 52px; }
+    .copy :global(.ring) { width: 52px; height: 52px; }
+
+    .rail {
+      --p: 0;
+      display: flex; position: fixed; z-index: 50; pointer-events: none;
+      right: clamp(20px, 3vw, 44px); top: var(--y, 100vh); transform: translateY(-50%);
+      flex-direction: column; align-items: center; gap: 14px; font-size: 14px; font-weight: 600;
+      color: #fff; mix-blend-mode: difference;
+    }
+    .rail-label {
+      position: absolute; right: calc(100% + 12px); top: 0; white-space: nowrap;
+      font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .rail-line {
+      width: 2px; height: 200px;
+      background: linear-gradient(#fff calc(var(--p) * 100%), rgba(255,255,255,.3) calc(var(--p) * 100%));
+    }
+    .body { position: static; }
+    .copy :global(.panel) {
+      position: absolute; right: clamp(80px, 9vw, 140px); bottom: 150px;
+      width: 380px; padding: 22px; background: rgba(20, 26, 29, .38);
+      border: 1px solid rgba(255, 255, 255, .1);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    }
+    .copy :global(.panel) :global(h2) { display: block; margin: 0 0 10px; font-size: 14px; font-weight: 700; }
+    .copy :global(.panel) :global(p) { display: block; margin: 0 0 18px; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+    .copy :global(.panel) :global(.cta) { width: 100%; white-space: nowrap; }
+
+    .facts {
+      display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 24px clamp(32px, 6vw, 96px);
+      border-top: 0; margin: 0; padding: 0 clamp(20px, 8vw, 140px) 40px;
+    }
+    .big { font-size: 30px; font-weight: 600; }
+    .small { font-size: 14px; }
+    .d { display: inline; }
+    .m { display: none; }
+  }
+</style>

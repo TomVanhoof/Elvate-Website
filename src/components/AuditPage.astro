@@ -1,0 +1,225 @@
+---
+import { Picture } from 'astro:assets';
+import heroImg from '../assets/photos/audit-hero.jpg';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Section from './Section.astro';
+import Eyebrow from './Eyebrow.astro';
+import Step from './Step.astro';
+import FaqList from './FaqList.astro';
+import AuditForm from './AuditForm.astro';
+import { type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+import { CONTACT } from '../config';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const p = t(lang).auditPage;
+const pad = (i: number) => String(i + 1).padStart(2, '0');
+---
+<BaseLayout
+  lang={lang}
+  routeId="audit"
+  title={p.title}
+  description={p.description}
+  headerVariant="none"
+  footerSlim
+  hidePill
+>
+  <!-- Hero + form (minimal header: logo and language switch only) -->
+  <div class="hero">
+    <Picture
+      src={heroImg}
+      alt={p.bgAlt}
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="bg"
+      pictureAttributes={{ class: 'bg-wrap' }}
+    />
+    <div class="scrim" aria-hidden="true"></div>
+    <Header lang={lang} routeId="audit" variant="minimal" />
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <Eyebrow as="p" text={p.eyebrow} accent />
+        <h1 class="wide">{p.h1}</h1>
+        <p class="lead">{p.text}</p>
+        <ul class="checks">
+          {p.checks.map((c) => (
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="form-card" id="form">
+        <p class="form-title wide">{p.formTitle}</p>
+        <AuditForm lang={lang} idPrefix="audit-hero" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 Wat je krijgt -->
+  <Section>
+    <div class="head-stack">
+      <Eyebrow number="01" text={p.get.eyebrow} />
+      <h2 class="wide display">{p.get.title}</h2>
+    </div>
+    <div class="cards">
+      {p.get.items.map((it, i) => (
+        <article class="card">
+          <span class="card-n wide">{pad(i)}</span>
+          <h3 class="wide">{it.title}</h3>
+          <p>{it.line}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 02 Hoe het werkt -->
+  <Section tone="surface" gap="56px">
+    <div class="head-stack">
+      <Eyebrow number="02" text={p.how.eyebrow} />
+      <h2 class="wide display">{p.how.title}</h2>
+    </div>
+    <ol class="steps">
+      {p.how.items.map((s, i) => <Step title={s.title} text={s.text} active={i === 0} last={i === p.how.items.length - 1} />)}
+    </ol>
+  </Section>
+
+  <!-- 03 Voorbeeldrapport -->
+  <Section gap="0">
+    <div class="sample">
+      <div class="sample-copy head-stack">
+        <Eyebrow number="03" text={p.sample.eyebrow} />
+        <h2 class="wide display">{p.sample.title}</h2>
+        <p class="sample-text">{p.sample.text}</p>
+      </div>
+      <figure class="report">
+        <div class="report-head">
+          <span class="report-brand">elvate</span>
+          <span class="report-meta wide">{p.sample.meta}</span>
+        </div>
+        <div class="scores">
+          {p.sample.scores.map((s) => (
+            <div class="score"><span class="score-label wide">{s}</span><span class="score-value wide">[—]</span></div>
+          ))}
+        </div>
+        <ol class="points">{p.sample.points.map((pt) => <li>{pt}</li>)}</ol>
+        <figcaption>{p.sample.caption}</figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <!-- 04 FAQ -->
+  <Section pad="bottom" gap="0">
+    <div class="faq-grid">
+      <div class="head-stack faq-head">
+        <Eyebrow number="04" text={p.faq.eyebrow} />
+        <h2 class="wide faq-title">{p.faq.title}</h2>
+      </div>
+      <div class="faq-list"><FaqList items={p.faq.items} /></div>
+    </div>
+  </Section>
+
+  <!-- Slot: inline form -->
+  <section class="closing">
+    <div class="closing-inner">
+      <h2 class="wide closing-title">{p.closing.title}</h2>
+      <div class="closing-form"><AuditForm lang={lang} idPrefix="audit-end" variant="inline" /></div>
+      <p class="talk">{p.closing.talk} <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> · <a href={CONTACT.phoneHref}>{CONTACT.phone}</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .head-stack { display: flex; flex-direction: column; gap: 20px; }
+  .display { margin: 0; font-size: min(clamp(26px, 3vw, 42px), 6vw); line-height: 1.1; font-weight: 700; }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; background: #1c2224; }
+  .hero :global(.bg-wrap) { position: absolute; inset: 0; display: block; }
+  .hero :global(.bg) { width: 100%; height: 100%; object-fit: cover; }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,10,12,.85) 0%, rgba(8,10,12,.45) 100%); }
+  .hero-inner {
+    position: relative; max-width: var(--container); margin: 0 auto;
+    padding: 32px var(--gutter) 56px;
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .hero-copy { display: flex; flex-direction: column; gap: 24px; }
+  h1 { margin: 0; font-size: clamp(26px, 3.8vw, 54px); line-height: 1.08; font-weight: 700; }
+  .lead { margin: 0; max-width: 540px; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 15px; }
+  .checks li { display: flex; gap: 10px; align-items: center; }
+  .checks svg { color: var(--accent); }
+  .form-card {
+    background: rgba(16, 20, 23, .9);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .1);
+    padding: 24px 20px; display: flex; flex-direction: column; gap: 16px;
+  }
+  .form-title { margin: 0; font-size: 18px; font-weight: 700; }
+  @media (min-width: 820px) {
+    .hero-inner { padding-block: clamp(32px, 6vw, 96px) clamp(56px, 8vw, 120px); flex-direction: row; align-items: center; gap: clamp(32px, 6vw, 96px); }
+    .hero-copy { flex: 1 1 480px; }
+    .lead { font-size: 18px; }
+    .form-card { flex: 1 1 400px; max-width: 520px; padding: clamp(24px, 3vw, 40px); }
+  }
+
+  /* 01 */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); padding: 28px; display: flex; flex-direction: column; gap: 16px; min-height: 240px; }
+  .card-n { font-size: 40px; font-weight: 300; color: var(--accent); }
+  .card h3 { margin: 0; font-size: 18px; font-weight: 700; }
+  .card p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--text-3); }
+  @media (min-width: 820px) { .card { padding: 32px; } }
+
+  /* 02 */
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  @media (min-width: 820px) {
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 40px 24px; }
+  }
+
+  /* 03 */
+  .sample { display: flex; flex-direction: column; gap: 32px; }
+  .sample-text { margin: 0; font-size: 17px; line-height: 1.6; color: var(--text-3); }
+  .report {
+    margin: 0; background: var(--paper); color: var(--ink); padding: 24px;
+    display: flex; flex-direction: column; gap: 20px; box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  }
+  .report-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid #C9CDCF; }
+  .report-brand { font-size: 18px; font-weight: 700; letter-spacing: -.03em; }
+  .report-meta { font-size: 11px; font-weight: 600; color: #4E575C; }
+  .scores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .score { background: #fff; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .score-label { font-size: 10px; font-weight: 600; color: #4E575C; }
+  .score-value { font-size: 24px; font-weight: 700; }
+  .points { margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.5; }
+  figcaption { font-size: 12px; color: #4E575C; }
+  @media (min-width: 820px) {
+    .sample { flex-direction: row; flex-wrap: wrap; align-items: center; gap: clamp(32px, 6vw, 96px); }
+    .sample-copy { flex: 1 1 360px; }
+    .report { flex: 1.3 1 480px; padding: clamp(24px, 3vw, 40px); }
+  }
+
+  /* 04 */
+  .faq-grid { display: flex; flex-direction: column; gap: 20px; }
+  .faq-title { margin: 0; font-size: clamp(24px, 2.6vw, 36px); line-height: 1.1; font-weight: 700; }
+  @media (min-width: 820px) {
+    .faq-grid { flex-direction: row; flex-wrap: wrap; gap: 48px; }
+    .faq-head { flex: 1 1 280px; }
+    .faq-list { flex: 2 1 560px; }
+  }
+
+  /* Closing */
+  .closing { background: var(--surface); padding: clamp(64px, 8vw, 120px) var(--gutter); }
+  .closing-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; align-items: center; text-align: center; }
+  .closing-title { margin: 0; font-size: min(clamp(26px, 3.2vw, 44px), 6.2vw); line-height: 1.1; font-weight: 700; }
+  .closing-form { width: 100%; text-align: left; }
+  .talk { margin: 0; font-size: 14px; color: var(--muted); }
+  .talk a { text-decoration: underline; text-underline-offset: 2px; }
+</style>

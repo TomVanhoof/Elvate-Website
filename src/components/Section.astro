@@ -1,0 +1,22 @@
+---
+interface Props {
+  tone?: 'bg' | 'surface';
+  id?: string;
+  /** Which sides get the section padding (the design drops the top on sections that follow a photo strip). */
+  pad?: 'both' | 'bottom' | 'none';
+  gap?: string;
+  class?: string;
+}
+const { tone = 'bg', id, pad = 'both', gap, class: cls = '' } = Astro.props;
+---
+<section id={id} class:list={['section', `tone-${tone}`, `pad-${pad}`, cls]} style={gap ? `--gap:${gap}` : undefined}>
+  <div class="container inner"><slot /></div>
+</section>
+
+<style>
+  .section { scroll-margin-top: 24px; }
+  .tone-surface { background: var(--surface); }
+  .pad-both { padding-block: var(--section-y); }
+  .pad-bottom { padding-bottom: var(--section-y); }
+  .inner { display: flex; flex-direction: column; gap: var(--gap, 48px); }
+</style>

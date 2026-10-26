@@ -1,0 +1,49 @@
+---
+import PhotoPanel from './PhotoPanel.astro';
+import Tag from './Tag.astro';
+
+interface Props {
+  title: string;
+  line: string;
+  href: string;
+  tag: string;
+  image?: ImageMetadata;
+  alt?: string;
+  fallback?: string;
+}
+const { title, line, href, tag, image, alt, fallback } = Astro.props;
+---
+<PhotoPanel
+  href={href}
+  image={image}
+  alt={alt}
+  fallback={fallback}
+  placeholder={image ? undefined : `[Screens ${title}]`}
+  scrim="linear-gradient(0deg, var(--scrim), rgba(8,10,12,0) 70%)"
+  widths={[480, 800, 1000]}
+  sizes="(min-width: 820px) 50vw, 100vw"
+  class="proj"
+>
+  <Tag slot="overlay" class="tag-pos">{tag}</Tag>
+  <div class="text">
+    <h3 class="wide">{title}</h3>
+    <p>{line}</p>
+  </div>
+</PhotoPanel>
+
+<style>
+  :global(.proj) { min-height: 380px; padding: 20px; }
+  :global(.proj):hover { color: inherit; }
+  :global(.proj) :global(.tag-pos) { position: absolute; top: 16px; left: 16px; padding: 7px 10px; font-size: 10px; }
+  .text { display: flex; flex-direction: column; gap: 8px; }
+  h3 { margin: 0; font-size: 22px; font-weight: 700; }
+  p { margin: 0; max-width: 440px; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+  :global(.proj):hover h3 { color: var(--accent); }
+
+  @media (min-width: 820px) {
+    :global(.proj) { min-height: 480px; padding: 28px; }
+    :global(.proj) :global(.tag-pos) { top: 20px; left: 20px; padding: 8px 12px; font-size: 11px; }
+    h3 { font-size: 28px; }
+    p { font-size: 15px; }
+  }
+</style>

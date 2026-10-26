@@ -1,0 +1,68 @@
+---
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import LangSwitch from './LangSwitch.astro';
+import { path, type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+import { CONTACT } from '../config';
+
+interface Props { lang: Lang; routeId?: RouteId }
+const { lang, routeId } = Astro.props;
+const tr = t(lang);
+const links: { id: RouteId; label: string }[] = [
+  { id: 'home', label: tr.nav.home },
+  { id: 'work', label: tr.nav.work },
+  { id: 'about', label: tr.nav.about },
+  { id: 'contact', label: tr.nav.contact },
+];
+---
+<div id="mmenu" class="mmenu" hidden role="dialog" aria-modal="true" aria-label={tr.nav.menu}>
+  <div class="mmenu-bar">
+    <a class="mmenu-logo" href={path('home', lang)} aria-label="elvate"><Logo height={24} /></a>
+    <button type="button" class="mmenu-close" data-menu-close aria-controls="mmenu" aria-label={tr.nav.closeMenu}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+  </div>
+  <nav class="mmenu-nav" aria-label={tr.nav.menu}>
+    <div class="mmenu-links wide">
+      {links.map((l) => (
+        <a href={path(l.id, lang)} aria-current={l.id === routeId ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </div>
+    <div class="mmenu-foot">
+      <Button href={path('audit', lang)} full>{tr.nav.ctaLong}</Button>
+      <div class="mmenu-meta">
+        <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        <LangSwitch lang={lang} routeId={routeId} />
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .mmenu {
+    position: fixed; inset: 0; z-index: 60; background: var(--bg);
+    display: flex; flex-direction: column; overflow-y: auto;
+  }
+  .mmenu[hidden] { display: none; }
+  .mmenu-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: var(--header-h); padding: 16px 20px; flex: none;
+  }
+  .mmenu-logo { display: inline-flex; min-height: var(--tap); align-items: center; }
+  .mmenu-close {
+    width: 48px; height: 48px; display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .35); border-radius: var(--radius-control);
+    background: transparent; color: #fff; cursor: pointer;
+  }
+  .mmenu-nav {
+    flex: 1; display: flex; flex-direction: column; justify-content: space-between;
+    gap: 32px; padding: 16px 20px 24px;
+  }
+  .mmenu-links { display: flex; flex-direction: column; border-top: 1px solid var(--line); font-size: 24px; font-weight: 700; }
+  .mmenu-links a { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .mmenu-links a[aria-current='page'] { color: var(--accent); }
+  .mmenu-foot { display: flex; flex-direction: column; gap: 16px; }
+  .mmenu-meta { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-3); }
+  .mmenu-meta a:first-child { display: inline-flex; align-items: center; min-height: var(--tap); }
+</style>

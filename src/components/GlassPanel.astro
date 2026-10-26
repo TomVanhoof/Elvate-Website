@@ -1,0 +1,13 @@
+---
+interface Props { as?: 'div' | 'aside'; class?: string; style?: string }
+const { as: Tag = 'div', class: cls = '', style } = Astro.props;
+---
+<Tag class:list={['glass', cls]} style={style}><slot /></Tag>
+
+<style>
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .1);
+  }
+</style>

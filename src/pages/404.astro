@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { path } from '../i18n/routes';
+import { t } from '../i18n';
+const tr = t("nl");
+---
+<BaseLayout lang="nl" title={`${tr.notFound.title} — elvate`} description={tr.notFound.text} noindex>
+  <div class="container" style="padding-block: var(--section-y)">
+    <p class="eyebrow">404</p>
+    <h1 class="wide" style="font-size: var(--fs-display-1); line-height: 1.08">{tr.notFound.title}</h1>
+    <p style="font-size: var(--fs-body-l); color: var(--text-2)">{tr.notFound.text}</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 32px">
+      <Button href={path('home', 'nl')} variant="secondary">{tr.notFound.home}</Button>
+      <Button href={path('audit', 'nl')}>{tr.notFound.audit}</Button>
+    </div>
+  </div>
+</BaseLayout>

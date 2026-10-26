@@ -1,0 +1,71 @@
+---
+import Logo from './Logo.astro';
+import LangSwitch from './LangSwitch.astro';
+import { path, type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+import { CONTACT } from '../config';
+
+interface Props { lang: Lang; routeId?: RouteId; slim?: boolean }
+const { lang, routeId, slim = false } = Astro.props;
+const tr = t(lang);
+const links: { id: RouteId; label: string }[] = [
+  { id: 'home', label: tr.nav.home },
+  { id: 'work', label: tr.nav.work },
+  { id: 'about', label: tr.nav.about },
+  { id: 'contact', label: tr.nav.contact },
+  { id: 'privacy', label: tr.footer.privacy },
+  { id: 'terms', label: tr.footer.terms },
+];
+const legal = links.filter((l) => l.id === 'privacy' || l.id === 'terms');
+---
+<footer class:list={['site-footer', { slim }]}>
+  <div class="inner">
+    {slim ? (
+      <>
+        <div class="id"><span class="name">elvate</span><span>{CONTACT.vat}</span></div>
+        <nav class="links wide" aria-label={tr.footer.legalLabel}>
+          {legal.map((l) => <a href={path(l.id, lang)}>{l.label}</a>)}
+        </nav>
+      </>
+    ) : (
+      <>
+        <div class="id">
+          <a class="logo" href={path('home', lang)} aria-label="elvate"><Logo height={30} /></a>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+          <span>{CONTACT.vat}</span>
+        </div>
+        <nav class="links wide" aria-label={tr.footer.label}>
+          {links.map((l) => <a href={path(l.id, lang)} aria-current={l.id === routeId ? 'page' : undefined}>{l.label}</a>)}
+        </nav>
+        <LangSwitch lang={lang} routeId={routeId} />
+      </>
+    )}
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: 56px var(--gutter);
+    border-top: 1px solid var(--border);
+  }
+  .inner {
+    max-width: var(--container); margin-inline: auto;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px;
+    font-size: var(--fs-small); color: var(--muted);
+  }
+  .id { display: flex; flex-direction: column; gap: 4px; }
+  .id a:not(.logo) { display: inline-flex; align-items: center; min-height: var(--tap); }
+  .logo { color: #fff; margin-bottom: 8px; }
+  .name { font-size: 26px; font-weight: 700; letter-spacing: -.03em; color: #fff; }
+  .links { display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: flex-start; font-size: 12px; }
+  .links a { display: inline-flex; align-items: center; min-height: var(--tap); }
+  .links a[aria-current='page'] { color: var(--accent); }
+  .slim { padding-block: 32px; }
+  .slim .id { flex-direction: row; align-items: center; gap: 20px; }
+
+  /* Room for the fixed audit pill on phones (BUILD-BRIEF §8). */
+  @media (max-width: 819px) {
+    .site-footer:not(.slim) { padding-bottom: 110px; }
+  }
+</style>

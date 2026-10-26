@@ -1,0 +1,177 @@
+---
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import LangSwitch from './LangSwitch.astro';
+import MobileMenu from './MobileMenu.astro';
+import { path, type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  routeId?: RouteId;
+  variant?: 'overlay' | 'solid' | 'minimal';
+  /** Where the nav "Gratis audit" button points. Defaults to the audit page. */
+  auditHref?: string;
+}
+const { lang, routeId, variant = 'solid', auditHref } = Astro.props;
+const tr = t(lang);
+const links: { id: RouteId; label: string }[] = [
+  { id: 'home', label: tr.nav.home },
+  { id: 'work', label: tr.nav.work },
+  { id: 'about', label: tr.nav.about },
+  { id: 'contact', label: tr.nav.contact },
+];
+const minimal = variant === 'minimal';
+---
+<header class:list={['site-header', `is-${variant}`]}>
+  <div class="bar">
+    <a class="logo" href={path('home', lang)} aria-label="elvate"><Logo height={28} /></a>
+
+    {minimal ? (
+      <LangSwitch lang={lang} routeId={routeId} />
+    ) : (
+      <>
+        <nav class="nav" aria-label={tr.nav.label}>
+          <div class="nav-links wide">
+            {links.map((l) => (
+              <a href={path(l.id, lang)} aria-current={l.id === routeId ? 'page' : undefined}>{l.label}</a>
+            ))}
+          </div>
+          <LangSwitch lang={lang} routeId={routeId} class="nav-lang" />
+          <Button href={auditHref ?? path('audit', lang)} compact class="nav-cta">{tr.nav.cta}</Button>
+          <button
+            type="button"
+            class="burger"
+            data-menu-open
+            aria-controls="mmenu"
+            aria-expanded="false"
+            aria-label={tr.nav.openMenu}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8h16M10 16h10" /></svg>
+          </button>
+        </nav>
+        <MobileMenu lang={lang} routeId={routeId} />
+      </>
+    )}
+  </div>
+</header>
+
+<style>
+  .site-header { position: relative; z-index: 10; min-height: var(--header-h); }
+  .is-solid { border-bottom: 1px solid var(--nav-line); }
+  .is-overlay { position: relative; }
+  .bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    min-height: var(--header-h); padding: 16px clamp(20px, 5vw, 72px);
+  }
+  /* After scrolling past the header it pins to the top on a dark, see-through backdrop.
+     The backdrop lives on ::before (and no transform is used) so the fixed mobile menu
+     inside the bar keeps the viewport as its containing block. */
+  .bar.is-stuck {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    animation: bar-in .25s ease-out;
+  }
+  .bar.is-stuck::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: rgba(10, 10, 14, .72);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+  }
+  @keyframes bar-in { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .bar.is-stuck { animation: none; } }
+  .logo { display: inline-flex; align-items: center; min-height: var(--tap); }
+  .logo:hover { color: #fff; }
+  .nav { display: flex; align-items: center; gap: clamp(16px, 3vw, 44px); }
+  .nav-links { display: flex; gap: 40px; font-size: 12px; font-weight: 500; }
+  .nav-links a { display: inline-flex; align-items: center; min-height: var(--tap); }
+  .nav-links a[aria-current='page'] { color: var(--accent); }
+  .burger {
+    display: none; width: 48px; height: 48px; align-items: center; justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .4); border-radius: var(--radius-control);
+    background: transparent; color: #fff; cursor: pointer; padding: 0;
+  }
+  .burger:hover { border-color: #fff; }
+
+  @media (max-width: 819px) {
+    .nav-links, :global(.nav-cta) { display: none; }
+    .burger { display: inline-flex; }
+    .bar { padding-inline: 20px; }
+  }
+
+  /* No JS: the menu button can't work, so keep the links visible and wrapping. */
+  :global(html.no-js) .burger { display: none; }
+  @media (max-width: 819px) {
+    :global(html.no-js) .nav-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    :global(html.no-js) .bar { flex-wrap: wrap; }
+  }
+</style>
+
+<script>
+  // Re-runs after every ClientRouter navigation; document/window listeners are dropped before the swap.
+  document.addEventListener('astro:page-load', () => {
+    const ac = new AbortController();
+    const { signal } = ac;
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+
+    const bar = document.querySelector<HTMLElement>('.site-header .bar');
+    if (bar) {
+      const update = () => {
+        const threshold = bar.parentElement?.offsetHeight ?? 80;
+        bar.classList.toggle('is-stuck', window.scrollY > threshold);
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true, signal });
+    }
+
+    const root = document.getElementById('mmenu');
+    if (root) {
+      const opener = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+      const closer = root.querySelector<HTMLButtonElement>('[data-menu-close]');
+      const focusable = () =>
+        Array.from(root.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+
+      const open = () => {
+        root.hidden = false;
+        document.body.classList.add('menu-open');
+        opener?.setAttribute('aria-expanded', 'true');
+        closer?.focus();
+      };
+      const close = (restore = true) => {
+        root.hidden = true;
+        document.body.classList.remove('menu-open');
+        opener?.setAttribute('aria-expanded', 'false');
+        if (restore) opener?.focus();
+      };
+
+      opener?.addEventListener('click', open);
+      closer?.addEventListener('click', () => close());
+      // Following a link inside the menu (e.g. an anchor on the same page) dismisses it.
+      root.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => close(false)));
+
+      document.addEventListener('keydown', (e) => {
+        if (root.hidden) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          close();
+        } else if (e.key === 'Tab') {
+          const items = focusable();
+          if (!items.length) return;
+          const first = items[0];
+          const last = items[items.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }, { signal });
+
+      // If the viewport grows past the breakpoint while open, close the overlay.
+      window.matchMedia('(min-width: 820px)').addEventListener('change', (m) => {
+        if (m.matches && !root.hidden) close(false);
+      }, { signal });
+    }
+  });
+</script>

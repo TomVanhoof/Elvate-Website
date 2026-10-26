@@ -1,0 +1,9 @@
+---
+import svg from '../assets/elvate.svg?raw';
+interface Props { height?: number }
+const { height = 28 } = Astro.props;
+const inline = svg
+  .replace(/fill="white"/g, 'fill="currentColor"')
+  .replace(/ width="\d+" height="\d+"/, ` width="${Math.round((height * 175) / 46)}" height="${height}" aria-hidden="true" focusable="false"`);
+---
+<Fragment set:html={inline} />

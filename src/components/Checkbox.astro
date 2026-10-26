@@ -1,0 +1,19 @@
+---
+interface Props { id: string; name: string; required?: boolean }
+const { id, name, required = false } = Astro.props;
+---
+<div class="check-wrap">
+  <label class="check" for={id}>
+    <input id={id} name={name} type="checkbox" value="1" required={required} aria-describedby={`${id}-err`} />
+    <span><slot /></span>
+  </label>
+  <span id={`${id}-err`} class="err" hidden></span>
+</div>
+
+<style>
+  .check-wrap { display: flex; flex-direction: column; gap: 6px; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: var(--text-3); cursor: pointer; }
+  input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--accent); }
+  span :global(a) { text-decoration: underline; text-underline-offset: 2px; }
+  .err { font-size: 13px; color: var(--error); }
+</style>

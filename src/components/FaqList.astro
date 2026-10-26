@@ -1,0 +1,38 @@
+---
+interface Props {
+  items: readonly { readonly q: string; readonly a: string }[];
+  /** Zero-based index of the item that starts open (Home opens the second). */
+  openIndex?: number;
+}
+const { items, openIndex } = Astro.props;
+---
+<div class="faq">
+  {items.map((item, i) => (
+    <details open={i === openIndex}>
+      <summary>
+        <span>{item.q}</span>
+        <span class="icon" aria-hidden="true">+</span>
+      </summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq { border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    min-height: var(--tap); padding: 18px 0; list-style: none; cursor: pointer;
+    font-size: 16px; font-weight: 600;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .icon { font-size: 22px; font-weight: 300; line-height: 1; color: var(--accent); transition: transform .2s ease; flex: none; }
+  details[open] .icon { transform: rotate(45deg); }
+  p { margin: 0 0 18px; font-size: 15px; line-height: 1.55; color: var(--text-3); }
+  @media (min-width: 820px) {
+    summary { gap: 16px; padding: 22px 0; font-size: 18px; }
+    .icon { font-size: 24px; }
+    p { margin-bottom: 22px; font-size: 16px; }
+  }
+</style>

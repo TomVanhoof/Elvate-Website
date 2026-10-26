@@ -1,0 +1,39 @@
+---
+interface Props {
+  name: string;
+  forWhom: string;
+  price: string;
+  from: string;
+  includes: string;
+  featured?: boolean;
+}
+const { name, forWhom, price, from, includes, featured = false } = Astro.props;
+---
+<article class:list={['price', { featured }]}>
+  <h3 class="wide">{name}</h3>
+  <p class="for">{forWhom}</p>
+  <p class="amount"><span class="from">{from}</span><span class="value wide">{price}</span></p>
+  <p class="includes">{includes}</p>
+</article>
+
+<style>
+  .price {
+    background: var(--surface); border: 1px solid var(--border); padding: 24px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .featured { border-color: var(--accent); }
+  .featured h3 { color: var(--accent); }
+  h3 { margin: 0; font-size: 16px; font-weight: 700; }
+  p { margin: 0; }
+  .for { font-size: 14px; color: var(--muted); }
+  .from { font-size: 13px; color: var(--muted); }
+  .value { display: block; font-size: 34px; font-weight: 600; }
+  .includes { padding-top: 14px; border-top: 1px solid var(--border); font-size: 14px; line-height: 1.6; color: var(--text-3); }
+  @media (min-width: 820px) {
+    .price { padding: 32px; gap: 18px; }
+    h3 { font-size: 18px; }
+    .for { font-size: 15px; }
+    .value { font-size: 40px; }
+    .includes { padding-top: 18px; font-size: 15px; }
+  }
+</style>

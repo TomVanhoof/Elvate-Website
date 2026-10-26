@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+
+interface Props {
+  image?: ImageMetadata;
+  alt?: string;
+  sizes?: string;
+  widths?: number[];
+  eager?: boolean;
+  /** CSS background for the bottom scrim. */
+  scrim?: string;
+  /** Gradient shown when there is no image yet (placeholder). */
+  fallback?: string;
+  /** Bracketed label shown on the placeholder, e.g. "[Foto van mij]". */
+  placeholder?: string;
+  position?: string;
+  as?: 'div' | 'article' | 'section';
+  href?: string;
+  id?: string;
+  class?: string;
+  style?: string;
+}
+const {
+  image,
+  alt = '',
+  sizes = '(min-width: 820px) 50vw, 100vw',
+  widths = [480, 800, 1200],
+  eager = false,
+  scrim = 'linear-gradient(0deg, var(--scrim), rgba(8,10,12,0) 60%)',
+  fallback = 'linear-gradient(180deg,#56656e,#1d2427)',
+  placeholder,
+  position = 'center',
+  as = 'div',
+  href,
+  id,
+  class: cls = '',
+  style = '',
+} = Astro.props;
+const Tag = href ? 'a' : as;
+---
+<Tag id={id} class:list={['panel', cls]} href={href} style={`background:${fallback};${style}`}>
+  {image && (
+    <Picture
+      src={image}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      decoding="async"
+      class="media"
+      pictureAttributes={{ class: 'media-wrap' }}
+      style={`object-position:${position}`}
+    />
+  )}
+  <div class="scrim" style={`background:${scrim}`} aria-hidden="true"></div>
+  {!image && placeholder && <span class="ph-label">{placeholder}</span>}
+  <slot name="overlay" />
+  <div class="content"><slot /></div>
+</Tag>
+
+<style>
+  .panel {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .panel :global(.media-wrap) { position: absolute; inset: 0; display: block; }
+  .panel :global(.media) { width: 100%; height: 100%; object-fit: cover; }
+  .scrim { position: absolute; inset: 0; }
+  .content { position: relative; }
+  .ph-label {
+    position: absolute; left: 14px; top: 14px;
+    font-size: 11px; line-height: 1.3; letter-spacing: .04em; color: rgba(255, 255, 255, .75);
+  }
+</style>

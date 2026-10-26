@@ -1,0 +1,74 @@
+---
+import PhotoPanel from './PhotoPanel.astro';
+
+interface Props {
+  title: string;
+  line: string;
+  eyebrow?: string;
+  image?: ImageMetadata;
+  alt?: string;
+  size?: 'lg' | 'sm';
+  fallback?: string;
+}
+const { title, line, eyebrow, image, alt, size = 'sm', fallback } = Astro.props;
+---
+<PhotoPanel
+  as="article"
+  image={image}
+  alt={alt}
+  fallback={fallback}
+  placeholder={image ? undefined : '[Foto]'}
+  widths={size === 'lg' ? [600, 900, 1200] : [400, 700]}
+  sizes={size === 'lg' ? '(min-width: 820px) 33vw, 100vw' : '(min-width: 820px) 22vw, 50vw'}
+  class={`svc svc-${size}`}
+>
+  <div class="text">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h3 class="wide">{title}</h3>
+    <p>{line}</p>
+  </div>
+</PhotoPanel>
+
+<style>
+  :global(.svc) { padding: 24px 20px; min-height: 380px; }
+  :global(.svc-sm) { min-height: 280px; padding: 18px 16px; }
+  .text { display: flex; flex-direction: column; gap: 10px; }
+  .eyebrow { color: var(--text-3); }
+  h3 { margin: 0; font-weight: 700; font-size: 30px; }
+  :global(.svc-sm) h3 { font-size: 16px; }
+  p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--text-2); }
+  :global(.svc-sm) p { font-size: 14px; line-height: 1.45; }
+  :global(.svc-sm) .eyebrow { display: none; }
+
+  @media (min-width: 820px) {
+    :global(.svc) { min-height: 560px; padding: 32px; }
+    :global(.svc-lg) { flex: 1.5 1 340px; }
+    :global(.svc-sm) { flex: 1 1 260px; padding: 28px; min-height: 560px; }
+    :global(.svc-lg) h3 { font-size: clamp(30px, 3vw, 44px); }
+    :global(.svc-sm) h3 { font-size: 24px; }
+    :global(.svc-lg) p { max-width: 360px; }
+    :global(.svc-sm) p { font-size: 15px; line-height: 1.5; }
+    :global(.svc-sm) .eyebrow { display: block; }
+    /* Reserve three lines so titles sit at the same height whatever the line length */
+    :global(.svc-sm) p { min-height: 4.5em; }
+  }
+
+  /* Hover: the card under the pointer grows, the others give up space */
+  @media (min-width: 1100px) and (hover: hover) {
+    :global(.svc) { min-width: 0; transition: flex-grow .45s cubic-bezier(.2, .7, .2, 1); }
+    :global(.svc-lg) { flex: 1.5 1 0; }
+    :global(.svc-sm) { flex: 1 1 0; }
+    :global(.strip:hover .svc) { flex-grow: 0.5; }
+    :global(.strip .svc:hover) { flex-grow: 1; }
+
+    /* Text keeps the width of its card at rest (share of the strip minus gaps and padding),
+       so hovering just clips it instead of re-wrapping it. */
+    :global(.strip) { container-type: inline-size; }
+    .text { flex: none; }
+    :global(.svc-lg) .text { width: calc((100cqw - 12px) * 0.3 - 64px); }
+    :global(.svc-sm) .text { width: calc((100cqw - 12px) * 0.2 - 56px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.svc) { transition: none !important; }
+  }
+</style>

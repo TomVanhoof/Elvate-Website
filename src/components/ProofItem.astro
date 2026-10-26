@@ -1,0 +1,22 @@
+---
+interface Props { n: string; title: string; text: string }
+const { n, title, text } = Astro.props;
+---
+<div class="proof">
+  <dt class="wide">{n}</dt>
+  <dd><strong>{title}</strong><span>{text}</span></dd>
+</div>
+
+<style>
+  .proof { display: flex; gap: 16px; }
+  dt { flex: 0 0 32px; font-size: 13px; font-weight: 700; color: var(--accent); }
+  dd { margin: 0; }
+  strong { display: block; font-size: 18px; margin-bottom: 4px; }
+  span { font-size: 15px; line-height: 1.55; color: var(--text-3); }
+  @media (min-width: 820px) {
+    .proof { gap: 24px; }
+    dt { flex-basis: 56px; font-size: 14px; }
+    strong { font-size: 20px; margin-bottom: 6px; }
+    span { font-size: 16px; }
+  }
+</style>

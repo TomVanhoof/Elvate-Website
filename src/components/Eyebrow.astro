@@ -1,0 +1,17 @@
+---
+interface Props {
+  number?: string;
+  text: string;
+  /** Use 'p' when a display title below is the section's real heading. */
+  as?: 'h2' | 'p';
+  accent?: boolean;
+  class?: string;
+}
+const { number, text, as: Tag = 'p', accent = false, class: cls = '' } = Astro.props;
+---
+<Tag class:list={['eyebrow', { accent }, cls]}>{number ? `${number} — ${text}` : text}</Tag>
+
+<style>
+  .eyebrow { margin: 0; }
+  .accent { color: var(--accent); }
+</style>

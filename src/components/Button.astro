@@ -1,0 +1,34 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  type?: 'button' | 'submit';
+  compact?: boolean;
+  full?: boolean;
+  class?: string;
+  [attr: string]: unknown;
+}
+const { variant = 'primary', href, type = 'button', compact = false, full = false, class: cls = '', ...rest } = Astro.props;
+const classes = ['btn', `btn-${variant}`, compact && 'btn-compact', full && 'btn-full', cls].filter(Boolean).join(' ');
+---
+{href ? (
+  <a class={classes} href={href} {...rest}><slot /></a>
+) : (
+  <button class={classes} type={type} {...rest}><slot /></button>
+)}
+
+<style is:global>
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    min-height: 52px; padding: 0 22px; border-radius: var(--radius-control);
+    font: 700 13px/1.2 var(--font); font-stretch: 112%; letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid transparent; cursor: pointer; transition: filter .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { color: var(--on-accent); filter: brightness(1.08); }
+  .btn-secondary { border-color: rgba(255, 255, 255, .4); color: #fff; background: transparent; }
+  .btn-secondary:hover { color: #fff; border-color: #fff; background: rgba(255, 255, 255, .06); }
+  .btn-compact { min-height: var(--tap); }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+  @media (max-width: 819px) { .btn-full-sm, .btn-full { width: 100%; } }
+</style>

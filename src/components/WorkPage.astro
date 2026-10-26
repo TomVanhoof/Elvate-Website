@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCase from './WorkCase.astro';
+import Button from './Button.astro';
+import Eyebrow from './Eyebrow.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const p = t(lang).workPage;
+const cases = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout lang={lang} routeId="work" title={p.title} description={p.description}>
+  <header class="container intro">
+    <div class="intro-title">
+      <Eyebrow text={p.eyebrow} />
+      <h1 class="wide">{p.h1}</h1>
+    </div>
+    <p>{p.intro}</p>
+  </header>
+
+  {cases.map((entry, i) => <WorkCase first={i === 0} entry={entry} lang={lang} tone={i % 2 === 1 ? 'surface' : 'bg'} />)}
+
+  <section class="container slot-wrap">
+    <div class="slot">
+      <div class="slot-copy">
+        <Eyebrow text={p.slot.eyebrow} />
+        <p class="slot-title wide">{p.slot.title}</p>
+        <p class="slot-text">{p.slot.text}</p>
+      </div>
+      <Button href={path('audit', lang)} class="slot-btn">{p.slot.cta}</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-block: clamp(64px, 8vw, 120px) clamp(40px, 5vw, 72px);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px;
+  }
+  .intro-title { display: flex; flex-direction: column; gap: 20px; }
+  h1 { margin: 0; font-size: clamp(34px, 5vw, 72px); line-height: 1; font-weight: 700; }
+  .intro p { margin: 0; max-width: 460px; font-size: 17px; line-height: 1.6; color: var(--text-3); }
+  .slot-wrap { padding-block: var(--section-y); }
+  .slot {
+    border: 1px dashed #4A545A; padding: clamp(32px, 5vw, 64px);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 32px;
+  }
+  .slot-copy { display: flex; flex-direction: column; gap: 14px; max-width: 620px; }
+  .slot-title { margin: 0; font-size: clamp(24px, 3vw, 40px); line-height: 1.1; font-weight: 700; }
+  .slot-text { margin: 0; font-size: 16px; line-height: 1.6; color: var(--text-3); }
+  .slot :global(.slot-btn) { min-height: 56px; }
+</style>

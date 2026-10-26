@@ -1,0 +1,37 @@
+---
+import { CONTACT } from '../config';
+import type { Lang } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props { lang: Lang; successText: string }
+const { lang, successText } = Astro.props;
+const f = t(lang).forms;
+---
+<div class="status" aria-live="polite" tabindex="-1" data-form-status>
+  <div class="box ok" data-status="success" hidden>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>
+    <div><strong>{f.successTitle}</strong><span>{successText}</span></div>
+  </div>
+  <div class="box bad" data-status="error" hidden>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 7v6M12 17h.01" /><circle cx="12" cy="12" r="10" /></svg>
+    <div>
+      <strong>{f.errorTitle}</strong>
+      <span>{f.errorBefore}<a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>{f.errorAfter}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .status:focus { outline: none; }
+  .status:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .box { display: flex; gap: 14px; align-items: flex-start; padding: 20px; border: 1px solid; margin-bottom: 16px; }
+  .box[hidden] { display: none; }
+  .box svg { flex: none; }
+  strong { display: block; margin-bottom: 4px; }
+  span { font-size: 14px; color: var(--text-3); }
+  .ok { border-color: var(--accent); }
+  .ok svg { color: var(--accent); }
+  .bad { border-color: var(--error); }
+  .bad svg { color: var(--error); }
+  .bad a { text-decoration: underline; }
+</style>

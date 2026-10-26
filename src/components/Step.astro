@@ -1,0 +1,43 @@
+---
+interface Props { n?: string; title: string; text: string; active?: boolean; last?: boolean }
+const { n, title, text, active = false, last = false } = Astro.props;
+---
+<li class:list={['step', { active, last }]}>
+  <div class="track" aria-hidden="true"><span class="dot"></span><span class="line"></span></div>
+  <div class="body">
+    {n && <span class="num wide">{n}</span>}
+    <h3 class="wide">{title}</h3>
+    <p>{text}</p>
+  </div>
+</li>
+
+<style>
+  /* Phone: vertical timeline (dot + line on the left). */
+  .step { display: flex; gap: 18px; }
+  .track { display: flex; flex-direction: column; align-items: center; }
+  .dot { width: 14px; height: 14px; flex: none; margin-top: 6px; border-radius: var(--radius-pill); border: 1.5px solid #fff; }
+  .line { flex: 1; width: 1px; background: var(--line); }
+  .last .line { display: none; }
+  .active .dot { background: var(--accent); border-color: var(--accent); }
+  .active .line { background: var(--accent); }
+  .body { padding-bottom: 28px; }
+  .last .body { padding-bottom: 0; }
+  .num { display: block; font-size: 13px; font-weight: 700; }
+  .active .num { color: var(--accent); }
+  h3 { margin: 6px 0; font-size: 15px; font-weight: 700; }
+  p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text-3); }
+
+  /* Desktop: horizontal (dot + line on top). */
+  @media (min-width: 820px) {
+    .step { flex-direction: column; gap: 16px; }
+    .track { flex-direction: row; gap: 12px; }
+    .dot { margin-top: 0; }
+    .line { width: auto; height: 1px; }
+    .last .line { display: block; }
+    .body { padding-bottom: 0; display: flex; flex-direction: column; gap: 16px; }
+    .num { font-size: 40px; font-weight: 300; }
+    .active .num { color: inherit; }
+    h3 { margin: 0; font-size: 16px; }
+    p { font-size: 16px; }
+  }
+</style>

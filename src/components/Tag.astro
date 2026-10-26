@@ -1,0 +1,12 @@
+---
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<span class:list={['tag', 'wide', cls]}><slot /></span>
+
+<style>
+  .tag {
+    display: inline-block; padding: 8px 12px; font-size: 11px; font-weight: 700;
+    background: var(--accent); color: var(--on-accent);
+  }
+</style>

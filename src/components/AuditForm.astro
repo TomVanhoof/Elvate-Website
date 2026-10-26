@@ -1,0 +1,67 @@
+---
+import Field from './Field.astro';
+import Checkbox from './Checkbox.astro';
+import Button from './Button.astro';
+import FormStatus from './FormStatus.astro';
+import FormScript from './FormScript.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+import { FORM_ENDPOINT } from '../config';
+
+interface Props {
+  lang: Lang;
+  /** Unique per instance so label/for ids don't collide when a page has two forms. */
+  idPrefix: string;
+  variant?: 'stacked' | 'inline';
+}
+const { lang, idPrefix, variant = 'stacked' } = Astro.props;
+const f = t(lang).forms;
+---
+<div data-form-wrap>
+  <FormStatus lang={lang} successText={f.successAudit} />
+  <form
+    class:list={['audit-form', variant]}
+    method="post"
+    action={FORM_ENDPOINT}
+    data-form="audit"
+    data-err-required={f.errRequired}
+    data-err-email={f.errEmail}
+    data-err-url={f.errUrl}
+    data-err-privacy={f.errPrivacy}
+    data-sending={f.sending}
+  >
+    <input type="hidden" name="form" value="audit" />
+    <input type="hidden" name="lang" value={lang} />
+    <input type="hidden" name="ts" value="" data-ts />
+    <div class="trap" aria-hidden="true">
+      <label for={`${idPrefix}-hp`}>Leave this field empty</label>
+      <input id={`${idPrefix}-hp`} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="fields">
+      <Field id={`${idPrefix}-url`} name="url" type="url" inputmode="url" autocomplete="url" label={f.url} placeholder={f.urlPlaceholder} required />
+      <Field id={`${idPrefix}-email`} name="email" type="email" autocomplete="email" label={f.email} placeholder={f.emailPlaceholder} required />
+    </div>
+    <Checkbox id={`${idPrefix}-privacy`} name="privacy" required>
+      {f.privacyBefore}<a href={path('privacy', lang)}>{f.privacyLink}</a>{f.privacyAfter}
+    </Checkbox>
+    <Button type="submit" class="submit">{f.auditSubmit}</Button>
+    <p class="note">{f.turnaround}</p>
+  </form>
+</div>
+<FormScript />
+
+<style>
+  .audit-form { display: flex; flex-direction: column; gap: 14px; }
+  .fields { display: flex; flex-direction: column; gap: 14px; }
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .audit-form :global(.submit) { min-height: 56px; }
+  .note { margin: 0; font-size: 13px; color: var(--text-3); }
+
+  @media (min-width: 820px) {
+    .note { font-size: 14px; }
+    .inline .fields { flex-direction: row; }
+    .inline .fields :global(.field) { flex: 1 1 220px; }
+    .inline :global(.submit) { align-self: flex-start; }
+  }
+</style>

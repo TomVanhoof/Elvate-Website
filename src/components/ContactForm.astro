@@ -1,0 +1,58 @@
+---
+import Field from './Field.astro';
+import Checkbox from './Checkbox.astro';
+import Button from './Button.astro';
+import FormStatus from './FormStatus.astro';
+import FormScript from './FormScript.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+import { FORM_ENDPOINT } from '../config';
+
+interface Props {
+  lang: Lang;
+  idPrefix: string;
+  /** Show the optional website field (Contact page). Home keeps the short version. */
+  withWebsite?: boolean;
+}
+const { lang, idPrefix, withWebsite = false } = Astro.props;
+const f = t(lang).forms;
+---
+<div data-form-wrap>
+  <FormStatus lang={lang} successText={f.successContact} />
+  <form
+    class="contact-form"
+    method="post"
+    action={FORM_ENDPOINT}
+    data-form="contact"
+    data-err-required={f.errRequired}
+    data-err-email={f.errEmail}
+    data-err-url={f.errUrl}
+    data-err-privacy={f.errPrivacy}
+    data-sending={f.sending}
+  >
+    <input type="hidden" name="form" value="contact" />
+    <input type="hidden" name="lang" value={lang} />
+    <input type="hidden" name="ts" value="" data-ts />
+    <div class="trap" aria-hidden="true">
+      <label for={`${idPrefix}-hp`}>Leave this field empty</label>
+      <input id={`${idPrefix}-hp`} name="company" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <Field id={`${idPrefix}-name`} name="name" autocomplete="name" label={f.name} required />
+    <Field id={`${idPrefix}-email`} name="email" type="email" autocomplete="email" label={f.email} required />
+    {withWebsite && <Field id={`${idPrefix}-website`} name="url" type="url" inputmode="url" autocomplete="url" label={f.website} />}
+    <Field id={`${idPrefix}-message`} name="message" label={f.message} textarea required />
+    <Checkbox id={`${idPrefix}-privacy`} name="privacy" required>
+      {f.privacyBefore}<a href={path('privacy', lang)}>{f.privacyLink}</a>{f.privacyAfter}
+    </Checkbox>
+    <Button type="submit" class="submit">{f.contactSubmit}</Button>
+  </form>
+</div>
+<FormScript />
+
+<style>
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .contact-form :global(.submit) { min-height: 56px; }
+  @media (min-width: 820px) { .contact-form :global(.submit) { align-self: flex-start; } }
+</style>

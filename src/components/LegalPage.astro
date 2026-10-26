@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Eyebrow from './Eyebrow.astro';
+import { type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props { lang: Lang; kind: 'privacy' | 'terms' }
+const { lang, kind } = Astro.props;
+const legal = t(lang).legal;
+const doc = legal[kind];
+const routeId: RouteId = kind === 'privacy' ? 'privacy' : 'terms';
+type Section = { h: string; p?: string[]; ul?: string[] };
+const sections = doc.sections as Section[];
+---
+<BaseLayout lang={lang} routeId={routeId} title={doc.title} description={doc.description}>
+  <div class="page">
+    <Eyebrow text={legal.eyebrow} />
+    <h1 class="wide">{doc.h1}</h1>
+    <p class="updated">{legal.updated}</p>
+    <div class="prose">
+      {sections.map((s) => (
+        <>
+          <h2 class="wide">{s.h}</h2>
+          {s.p?.map((para) => <p set:html={para} />)}
+          {s.ul && <ul>{s.ul.map((li) => <li set:html={li} />)}</ul>}
+        </>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page { max-width: 760px; margin: 0 auto; padding: clamp(56px, 7vw, 112px) clamp(20px, 5vw, 32px) clamp(72px, 9vw, 140px); }
+  h1 { margin: 20px 0 12px; overflow-wrap: break-word; font-size: clamp(24px, 3.6vw, 48px); line-height: 1.08; font-weight: 700; }
+  .updated { margin: 0; font-size: 14px; color: var(--muted); }
+  .prose h2 { font-size: 17px; font-weight: 700; line-height: 1.3; margin: 48px 0 14px; }
+  .prose p, .prose li { font-size: 17px; line-height: 1.7; color: var(--text-2); }
+  .prose p { margin: 0 0 14px; }
+  .prose ul { margin: 0 0 14px; padding-left: 20px; }
+  .prose :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+</style>

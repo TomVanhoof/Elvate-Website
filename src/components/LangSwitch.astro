@@ -1,0 +1,36 @@
+---
+import { path, type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+
+interface Props { lang: Lang; routeId?: RouteId; class?: string }
+const { lang, routeId = 'home', class: cls = '' } = Astro.props;
+const label = t(lang).lang_switch.label;
+const items: { code: string; lang: Lang }[] = [
+  { code: 'NL', lang: 'nl' },
+  { code: 'EN', lang: 'en' },
+];
+---
+<div role="group" aria-label={label} class:list={['lang-switch', 'wide', cls]}>
+  {items.map((item, i) => (
+    <>
+      {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+      <a
+        href={path(routeId, item.lang)}
+        lang={item.lang}
+        hreflang={item.lang}
+        aria-current={item.lang === lang ? 'true' : undefined}
+        data-astro-prefetch={item.lang === lang ? undefined : 'viewport'}
+      >{item.code}</a>
+    </>
+  ))}
+</div>
+
+<style>
+  .lang-switch { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; }
+  .lang-switch a {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: var(--tap); min-height: var(--tap);
+  }
+  .lang-switch a[aria-current='true'] { color: var(--accent); }
+  .sep { color: var(--placeholder); }
+</style>

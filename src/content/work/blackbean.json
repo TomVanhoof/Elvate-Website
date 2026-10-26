@@ -1,0 +1,41 @@
+{
+  "order": 2,
+  "title": "BlackBean",
+  "type": {
+    "nl": "Koffiebrander · Website-concept",
+    "en": "Coffee roaster · Website concept"
+  },
+  "concept": true,
+  "brief": {
+    "nl": "[De brief die ik bedacht, in twee zinnen.]",
+    "en": "[The brief I made up, in two sentences.]"
+  },
+  "audience": {
+    "nl": "[Voor wie de site is.]",
+    "en": "[Who the site is for.]"
+  },
+  "decisions": {
+    "nl": "Rustige, gedempte kleuren die de gezellige sfeer weerspiegelen. [Verdere keuzes.]",
+    "en": "Calm, muted colours that reflect the cosy atmosphere. [Further choices.]"
+  },
+  "colors": [
+    { "hex": "#F9F2EA" },
+    { "hex": "#7B3537" },
+    { "hex": "#07545E" },
+    { "hex": "#D2872C" },
+    { "hex": "#49230E" },
+    { "hex": "#0B0B0B" }
+  ],
+  "font": "[Lettertype]",
+  "logo": "../../assets/work/blackbean-logo.png",
+  "hero": "../../assets/work/blackbean-hero.jpg",
+  "heroAlt": {
+    "nl": "[Alt-tekst: hero-screen van de BlackBean-website]",
+    "en": "[Alt text: hero screen of the BlackBean website]"
+  },
+  "screens": [
+    { "image": "../../assets/work/blackbean-1.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, bonen]", "en": "[Alt text: BlackBean, beans]" } },
+    { "image": "../../assets/work/blackbean-2.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, koffie]", "en": "[Alt text: BlackBean, coffee]" } },
+    { "image": "../../assets/work/blackbean-3.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, blog]", "en": "[Alt text: BlackBean, blog]" } }
+  ]
+}

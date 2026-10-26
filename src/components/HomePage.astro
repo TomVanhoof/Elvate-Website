@@ -1,0 +1,364 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from './HomeHero.astro';
+import Section from './Section.astro';
+import Eyebrow from './Eyebrow.astro';
+import ServiceCard from './ServiceCard.astro';
+import ProofItem from './ProofItem.astro';
+import Step from './Step.astro';
+import ProjectCard from './ProjectCard.astro';
+import PriceCard from './PriceCard.astro';
+import FaqList from './FaqList.astro';
+import PhotoPanel from './PhotoPanel.astro';
+import GlassPanel from './GlassPanel.astro';
+import AuditForm from './AuditForm.astro';
+import ContactForm from './ContactForm.astro';
+import Button from './Button.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+import { CONTACT, SITE_URL } from '../config';
+
+import svcWebsites from '../assets/photos/service-websites.jpg';
+import svcWebshops from '../assets/photos/service-webshops.jpg';
+import svcBranding from '../assets/photos/service-branding.jpg';
+import svcPhotos from '../assets/photos/service-photos.jpg';
+import auditBg from '../assets/photos/audit-bg.jpg';
+import projApplique from '../assets/photos/project-applique.jpg';
+import projBlackBean from '../assets/photos/project-blackbean.jpg';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = t(lang);
+const h = tr.home;
+
+// Only facts that are known; no address, ratings or reviews until they exist.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'elvate',
+  url: SITE_URL,
+  email: CONTACT.email,
+  telephone: CONTACT.phone,
+  vatID: CONTACT.vat,
+  areaServed: 'BE',
+};
+const serviceImages = [svcWebsites, svcWebshops, svcBranding, svcPhotos];
+const serviceFallbacks = [
+  'linear-gradient(180deg,#56656e,#1d2427)',
+  'linear-gradient(180deg,#7c7466,#25221d)',
+  'linear-gradient(180deg,#4f5d55,#1a201c)',
+  'linear-gradient(180deg,#6a7680,#22282c)',
+];
+const projectImages = [projApplique, projBlackBean];
+const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gradient(160deg,#6e5b4d,#1f1814)'];
+---
+<BaseLayout lang={lang} routeId="home" title={h.title} description={h.description} headerVariant="none">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <HomeHero lang={lang} />
+
+  <!-- 02 Herkenbaar? -->
+  <Section>
+    <Eyebrow as="h2" number="02" text={h.recognise.eyebrow} />
+    <div class="pain">
+      {h.recognise.points.map((p) => <p>{p}</p>)}
+    </div>
+    <p class="closing wide">{h.recognise.closingA} <span>{h.recognise.closingB}</span></p>
+  </Section>
+
+  <!-- 03 Wat ik doe -->
+  <section class="services">
+    <div class="container services-head"><Eyebrow as="h2" number="03" text={h.services.eyebrow} /></div>
+    <div class="strip">
+      {h.services.items.map((s, i) => (
+        <ServiceCard
+          title={s.title}
+          line={s.line}
+          eyebrow={s.eyebrow || undefined}
+          image={serviceImages[i]}
+          alt={s.alt}
+          fallback={serviceFallbacks[i]}
+          size={i < 2 ? 'lg' : 'sm'}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- 04 Waarom elvate -->
+  <Section pad="bottom" gap="0">
+    <div class="why">
+      <PhotoPanel
+        class="portrait"
+        fallback="linear-gradient(180deg,#5d6468,#1f2427)"
+        placeholder={h.why.photoAlt}
+        scrim="transparent"
+      />
+      <div class="why-body">
+        <div class="why-head">
+          <Eyebrow number="04" text={h.why.eyebrow} />
+          <h2 class="wide display-2">{h.why.title}</h2>
+        </div>
+        <dl class="proofs">
+          {h.why.items.map((it, i) => <ProofItem n={String(i + 1).padStart(2, '0')} title={it.title} text={it.text} />)}
+        </dl>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 05 Zo werkt het -->
+  <Section tone="surface" gap="56px">
+    <div class="split-head">
+      <div class="head-stack">
+        <Eyebrow number="05" text={h.steps.eyebrow} />
+        <h2 class="wide display-2">{h.steps.title}</h2>
+      </div>
+      <p class="timing">{h.steps.timeBefore}<strong>{h.steps.time}</strong>{h.steps.timeAfter}</p>
+    </div>
+    <ol class="steps">
+      {h.steps.items.map((s, i) => (
+        <Step n={String(i + 1).padStart(2, '0')} title={s.title} text={s.text} active={i === 0} last={i === h.steps.items.length - 1} />
+      ))}
+    </ol>
+  </Section>
+
+  <!-- 06 Mijn werk -->
+  <Section id="werk" gap="40px">
+    <div class="split-head">
+      <div class="head-stack">
+        <Eyebrow number="06" text={h.work.eyebrow} />
+        <h2 class="wide display-2">{h.work.title}</h2>
+      </div>
+      <a class="all wide" href={path('work', lang)}>{h.work.all}</a>
+    </div>
+    <div class="projects">
+      {h.work.items.map((p, i) => (
+        <ProjectCard
+          title={p.title}
+          line={p.line}
+          href={path('work', lang)}
+          tag={h.work.tag}
+          image={projectImages[i]}
+          alt={p.alt}
+          fallback={projectFallbacks[i]}
+        />
+      ))}
+    </div>
+    <a class="yours" href="#audit">
+      <span class="yours-title wide">{h.work.yoursTitle}</span>
+      <span class="yours-cta">
+        <span class="yours-label wide">{h.work.yoursCta}</span>
+        <span class="ring">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </span>
+      </span>
+    </a>
+  </Section>
+
+  <!-- 07 Gratis audit -->
+  <PhotoPanel
+    as="section"
+    id="audit"
+    class="audit"
+    image={auditBg}
+    alt=""
+    fallback="linear-gradient(180deg,#3f4b52 0%,#6b6a62 45%,#202627 100%)"
+    scrim="linear-gradient(90deg, rgba(8,10,12,.2), rgba(8,10,12,.7))"
+    widths={[640, 1024, 1600]}
+    sizes="100vw"
+  >
+    <GlassPanel class="audit-card">
+      <Eyebrow as="p" number="07" text={h.audit.eyebrow} accent />
+      <h2 class="wide audit-title">{h.audit.title}</h2>
+      <p class="audit-text">{h.audit.text}</p>
+      <AuditForm lang={lang} idPrefix="home-audit" />
+    </GlassPanel>
+  </PhotoPanel>
+
+  <!-- 08 Prijzen -->
+  <Section gap="40px">
+    <div class="head-stack">
+      <Eyebrow number="08" text={h.pricing.eyebrow} />
+      <h2 class="wide display-2">{h.pricing.title}</h2>
+    </div>
+    <div class="prices">
+      {h.pricing.plans.map((p, i) => (
+        <PriceCard name={p.name} forWhom={p.forWhom} price={p.price} from={h.pricing.from} includes={p.includes} featured={i === 1} />
+      ))}
+    </div>
+    <div class="addons">
+      <span class="eyebrow">{h.pricing.addonsLabel}</span>
+      <span class="addons-list">{h.pricing.addons}</span>
+    </div>
+    <p class="unsure">{h.pricing.unsure} <a href="#audit">{h.pricing.unsureLink}</a></p>
+  </Section>
+
+  <!-- 09 FAQ -->
+  <Section pad="bottom" gap="0">
+    <div class="faq-grid">
+      <div class="head-stack faq-head">
+        <Eyebrow as="p" number="09" text={h.faq.eyebrow} />
+        <h2 class="wide faq-title">{h.faq.title}</h2>
+      </div>
+      <div class="faq-list"><FaqList items={h.faq.items} openIndex={1} /></div>
+    </div>
+  </Section>
+
+  <!-- 10 Slot-CTA + contact -->
+  <Section tone="surface" gap="0">
+    <div class="closing-grid">
+      <div class="closing-copy">
+        <h2 class="wide closing-title">{h.closing.title}</h2>
+        <div class="closing-actions">
+          <Button href="#audit" class="big">{h.closing.audit}</Button>
+          <Button href={`mailto:${CONTACT.email}`} variant="secondary" class="big">{h.closing.mail}</Button>
+        </div>
+        <div class="closing-contact">
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        </div>
+      </div>
+      <div class="closing-form">
+        <ContactForm lang={lang} idPrefix="home-contact" />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .display-2 { margin: 0; font-size: min(var(--fs-display-2), 5.6vw); line-height: 1.1; font-weight: 700; }
+  .head-stack { display: flex; flex-direction: column; gap: 20px; }
+  .split-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+
+  /* 02 */
+  .pain { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 0 32px; }
+  .pain p {
+    margin: 0; padding: 18px 0; border-top: 1px solid var(--line);
+    font-size: 21px; line-height: 1.3; font-weight: 500;
+  }
+  .pain p:last-child { border-bottom: 1px solid var(--line); }
+  .closing { margin: 0; font-size: 22px; line-height: 1.15; font-weight: 700; }
+  .closing span { color: var(--accent); }
+  @media (min-width: 820px) {
+    .pain { gap: 32px; }
+    .pain p { padding: 20px 0 0; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; }
+    .pain p:last-child { border-bottom: 0; }
+    .closing { font-size: clamp(26px, 3.4vw, 48px); line-height: 1.1; }
+  }
+
+  /* 03 */
+  .services { padding-bottom: var(--section-y); }
+  .services-head { margin-bottom: 20px; }
+  .strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
+  .strip > :global(.svc-lg) { grid-column: 1 / -1; }
+  @media (min-width: 820px) {
+    .services { padding-inline: clamp(0px, 2.4vw, 36px); }
+    .services-head { margin-bottom: 32px; }
+    .strip { display: flex; flex-wrap: wrap; }
+  }
+
+  /* 04 */
+  .why { display: flex; flex-direction: column; gap: 28px; }
+  .why :global(.portrait) { height: 420px; }
+  .why-body { display: flex; flex-direction: column; gap: 28px; }
+  .why-head { display: flex; flex-direction: column; gap: 20px; }
+  .why-head .display-2 { font-size: 24px; line-height: 1.1; }
+  .proofs { margin: 0; display: flex; flex-direction: column; gap: 22px; }
+  @media (min-width: 820px) {
+    .why { flex-direction: row; flex-wrap: wrap; align-items: center; gap: clamp(32px, 6vw, 96px); }
+    .why :global(.portrait) { flex: 1 1 360px; height: auto; min-height: 540px; align-self: stretch; }
+    .why-body { flex: 1.2 1 440px; gap: 40px; }
+    .why-head .display-2 { font-size: var(--fs-display-2); line-height: 1.08; }
+    .proofs { gap: 28px; }
+  }
+
+  /* 05 */
+  .timing { margin: 0; font-size: 15px; color: var(--text-3); }
+  .timing strong { color: #fff; }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  @media (min-width: 820px) {
+    .timing { font-size: 16px; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 40px 24px; }
+  }
+  @media (max-width: 819px) {
+    .split-head { flex-direction: column; align-items: flex-start; }
+    .split-head .display-2 { display: none; }
+    .split-head .head-stack { gap: 0; }
+  }
+
+  /* 06 */
+  .all { font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; min-height: var(--tap); }
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 20px; }
+  .yours {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 16px;
+    padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .yours-title { font-size: 17px; font-weight: 700; }
+  .yours-cta { display: inline-flex; align-items: center; gap: 14px; }
+  .yours-label { display: none; font-size: 13px; font-weight: 600; }
+  .ring {
+    width: 48px; height: 48px; flex: none; border: 1.5px solid #fff; border-radius: var(--radius-pill);
+    display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s ease;
+  }
+  .yours:hover .ring { border-color: var(--accent); }
+  @media (min-width: 820px) {
+    .projects { gap: 24px; }
+    .yours { padding: 28px 0; }
+    .yours-title { font-size: clamp(20px, 2.4vw, 32px); }
+    .yours-label { display: inline; }
+    .ring { width: 52px; height: 52px; }
+  }
+  @media (max-width: 819px) {
+    .split-head .display-2 { display: block; }
+  }
+
+  /* 07 */
+  :global(.audit) { scroll-margin-top: 0; padding: 200px 12px 12px; }
+  :global(.audit) :global(.content) { width: 100%; display: flex; justify-content: flex-end; }
+  :global(.audit-card) { width: 100%; padding: 24px 20px; display: flex; flex-direction: column; gap: 18px; background: rgba(16, 20, 23, .92); }
+  .audit-title { margin: 0; font-size: 21px; line-height: 1.15; font-weight: 700; }
+  .audit-text { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-2); }
+  @media (min-width: 820px) {
+    :global(.audit) { min-height: 720px; justify-content: center; padding: clamp(24px, 6vw, 96px) clamp(16px, 8vw, 140px); }
+    :global(.audit-card) { width: min(100%, 560px); padding: clamp(24px, 4vw, 48px); gap: 22px; background: var(--glass); }
+    .audit-title { font-size: clamp(24px, 2.6vw, 36px); line-height: 1.1; }
+    .audit-text { font-size: 16px; }
+  }
+
+  /* 08 */
+  .prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+  .addons { display: flex; flex-direction: column; gap: 8px; }
+  .addons-list { font-size: 15px; line-height: 1.6; color: var(--text-2); }
+  .unsure { margin: 0; font-size: 16px; line-height: 1.5; }
+  .unsure a { color: var(--accent); font-weight: 600; }
+  @media (min-width: 820px) {
+    .addons { flex-direction: row; flex-wrap: wrap; gap: 10px 28px; align-items: baseline; }
+    .addons-list { font-size: 16px; }
+    .unsure { font-size: 18px; }
+  }
+
+  /* 09 */
+  .faq-grid { display: flex; flex-direction: column; gap: 20px; }
+  .faq-title { margin: 0; font-size: 22px; line-height: 1.1; font-weight: 700; display: none; }
+  @media (min-width: 820px) {
+    .faq-grid { flex-direction: row; flex-wrap: wrap; gap: 48px; }
+    .faq-head { flex: 1 1 280px; }
+    .faq-list { flex: 2 1 560px; }
+    .faq-title { display: block; font-size: clamp(26px, 2.8vw, 40px); }
+  }
+
+  /* 10 */
+  .closing-grid { display: flex; flex-direction: column; gap: 24px; }
+  .closing-copy { display: flex; flex-direction: column; gap: 24px; }
+  .closing-title { margin: 0; font-size: 24px; line-height: 1.12; font-weight: 700; }
+  .closing-actions { display: flex; flex-direction: column; gap: 12px; }
+  .closing-contact { display: none; flex-direction: column; gap: 8px; font-size: 18px; }
+  .closing-form { padding-top: 16px; border-top: 1px solid var(--border); }
+  .closing :global(.big) { min-height: 56px; }
+  @media (min-width: 820px) {
+    .closing-grid { flex-direction: row; flex-wrap: wrap; gap: clamp(32px, 6vw, 96px); }
+    .closing-copy { flex: 1 1 460px; gap: 32px; }
+    .closing-title { font-size: clamp(28px, 3.6vw, 52px); line-height: 1.08; }
+    .closing-actions { flex-direction: row; flex-wrap: wrap; }
+    .closing-contact { display: flex; margin-top: auto; }
+    .closing-form { flex: 1 1 420px; padding-top: 0; border-top: 0; }
+  }
+</style>

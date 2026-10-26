@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Eyebrow from './Eyebrow.astro';
+import ContactForm from './ContactForm.astro';
+import { path, type Lang } from '../i18n/routes';
+import { t } from '../i18n';
+import { CONTACT } from '../config';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const p = t(lang).contactPage;
+---
+<BaseLayout lang={lang} routeId="contact" title={p.title} description={p.description}>
+  <div class="container wrap">
+    <div class="left">
+      <div class="intro">
+        <Eyebrow text={p.eyebrow} />
+        <h1 class="wide">{p.h1}</h1>
+        <p>{p.intro}</p>
+      </div>
+      <dl class="facts">
+        <div><dt class="eyebrow">{p.email}</dt><dd class="big"><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></dd></div>
+        <div><dt class="eyebrow">{p.phone}</dt><dd class="big"><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></dd></div>
+        <div><dt class="eyebrow">{p.vat}</dt><dd class="small">{CONTACT.vat}</dd></div>
+      </dl>
+      <a class="audit" href={path('audit', lang)}>
+        <span class="eyebrow a">{p.auditEyebrow}</span>
+        <span class="wide audit-title">{p.auditTitle}</span>
+        <span class="audit-text">{p.auditText}</span>
+      </a>
+    </div>
+    <div class="form-card">
+      <p class="form-title wide">{p.formTitle}</p>
+      <ContactForm lang={lang} idPrefix="contact" withWebsite />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap { padding-block: clamp(40px, 7vw, 112px) var(--section-y); display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 96px); }
+  .left { flex: 1 1 380px; display: flex; flex-direction: column; gap: 40px; }
+  .intro { display: flex; flex-direction: column; gap: 24px; }
+  h1 { margin: 0; font-size: clamp(32px, 4.4vw, 64px); line-height: 1.04; font-weight: 700; }
+  .intro p { margin: 0; max-width: 440px; font-size: 18px; line-height: 1.6; color: var(--text-2); }
+  .facts { margin: 0; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+  .facts > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  dt { align-self: center; }
+  dd { margin: 0; }
+  .big { font-size: 20px; }
+  .big a { display: inline-flex; align-items: center; min-height: var(--tap); }
+  .small { font-size: 16px; color: var(--text-3); }
+  .audit { background: var(--surface); border: 1px solid var(--accent); padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .audit:hover { color: inherit; }
+  .audit:hover .audit-title { color: var(--accent); }
+  .a { color: var(--accent); }
+  .audit-title { font-size: 20px; font-weight: 700; line-height: 1.2; }
+  .audit-text { font-size: 14px; color: var(--text-3); }
+  .form-card {
+    flex: 1.3 1 460px; align-self: flex-start; background: var(--surface); border: 1px solid var(--border);
+    padding: clamp(24px, 3.4vw, 48px); display: flex; flex-direction: column; gap: 18px;
+  }
+  .form-title { margin: 0; font-size: 18px; font-weight: 700; }
+</style>

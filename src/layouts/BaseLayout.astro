@@ -1,0 +1,90 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import fontLatin from '../assets/fonts/archivo-latin-wdth.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AuditPill from '../components/AuditPill.astro';
+import { routes, type Lang, type RouteId } from '../i18n/routes';
+import { t } from '../i18n';
+import { SITE_URL } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  /** Page id from the route table. Drives hreflang, canonical, the language switch and the active nav link. */
+  routeId?: RouteId;
+  ogImage?: string;
+  headerVariant?: 'overlay' | 'solid' | 'minimal' | 'none';
+  footerSlim?: boolean;
+  hidePill?: boolean;
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  lang,
+  routeId,
+  ogImage = '/og-default.png',
+  headerVariant = 'solid',
+  footerSlim = false,
+  hidePill = false,
+  noindex = false,
+} = Astro.props;
+
+const tr = t(lang);
+const abs = (p: string) => new URL(p, SITE_URL).href;
+const canonical = routeId ? abs(routes[routeId][lang]) : abs(Astro.url.pathname);
+const alternates = routeId
+  ? [
+      { hreflang: 'nl', href: abs(routes[routeId].nl) },
+      { hreflang: 'en', href: abs(routes[routeId].en) },
+      { hreflang: 'x-default', href: abs(routes[routeId].nl) },
+    ]
+  : [];
+---
+<!doctype html>
+<html lang={tr.htmlLang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="elvate" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={abs(ogImage)} />
+    <meta property="og:locale" content={lang === 'nl' ? 'nl_BE' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="theme-color" content="#0C0F11" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preload" href={fontLatin} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+      // ClientRouter copies the new page's <html class="no-js"> on every swap.
+      document.addEventListener('astro:after-swap', () => document.documentElement.classList.replace('no-js', 'js'));
+    </script>
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body data-lang={lang}>
+    <a class="skip-link" href="#main">{tr.skip}</a>
+    {headerVariant !== 'none' && <Header lang={lang} routeId={routeId} variant={headerVariant} />}
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} routeId={routeId} slim={footerSlim} />
+    {!hidePill && <AuditPill lang={lang} routeId={routeId} />}
+  </body>
+</html>

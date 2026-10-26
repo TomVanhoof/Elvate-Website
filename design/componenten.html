@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>elvate — Componenten &amp; tokens</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0C0F11}
+a{color:inherit}a:hover{color:var(--accent)}
+*{box-sizing:border-box}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wide{font-family:Archivo,sans-serif;font-stretch:125%;text-transform:uppercase;letter-spacing:.02em}
+.eyebrow{font:600 12px/1 Archivo,sans-serif;font-stretch:125%;text-transform:uppercase;letter-spacing:.16em;color:#9AA3A8}
+.spec{font:400 12px/1.5 ui-monospace,Menlo,monospace;color:#9AA3A8}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 22px;border-radius:4px;font:700 13px/1.2 Archivo,sans-serif;font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-acc{background:var(--accent);color:#06182A}
+.btn-ghost{border-color:rgba(255,255,255,.4);color:#fff;background:transparent}
+.is-hover.btn-acc{filter:brightness(1.08)}
+.is-hover.btn-ghost{border-color:#fff;background:rgba(255,255,255,.06)}
+.is-focus{outline:2px solid var(--accent);outline-offset:3px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.ring{width:52px;height:52px;border-radius:999px;border:1.5px solid #fff;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ph{position:relative;overflow:hidden}
+.ph-label{position:absolute;left:14px;bottom:12px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.75)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font:600 12px/1 Archivo,sans-serif;font-stretch:112%;letter-spacing:.1em;text-transform:uppercase;color:#C9D0D4}
+.field input{min-height:52px;border-radius:4px;border:1px solid #3A4247;padding:0 16px;font:400 16px Archivo,sans-serif;background:#0C0F11;color:#fff;width:100%}
+.field input::placeholder{color:#7D878D}
+.field.focus input{border-color:var(--accent);outline:2px solid var(--accent);outline-offset:1px}
+.field.error input{border-color:#FF8A7A}
+.err{font-size:13px;color:#FF8A7A;display:flex;gap:6px;align-items:center}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;color:#C9D0D4}
+.check input{width:20px;height:20px;margin:0;accent-color:var(--accent);flex:none}
+.block{background:#13181B;border:1px solid #262E33;padding:32px;display:flex;flex-direction:column;gap:24px}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .faq-icon{transform:rotate(45deg)}
+</style>
+</head>
+<body>
+<div style="--accent: #8FD3FF; font-family: Archivo, sans-serif; color: #fff; background: #0C0F11; padding: clamp(32px, 5vw, 72px) clamp(20px, 5vw, 64px); display: flex; flex-direction: column; gap: 56px">
+
+<header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; padding-bottom: 32px; border-bottom: 1px solid #3A4247">
+<div style="display: flex; flex-direction: column; gap: 16px"><span class="eyebrow">elvate.be · handoff</span><h1 class="wide" style="margin: 0; font-size: clamp(30px, 4vw, 56px); font-weight: 700">Componenten &amp; tokens</h1></div>
+<p style="margin: 0; max-width: 460px; font-size: 15px; line-height: 1.6; color: #C9D0D4">Alles wat de pagina's gebruiken, op één plek. Elk blok hieronder wordt één Astro-component.</p>
+</header>
+
+<!-- TOKENS: KLEUR -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">01 — Kleuren</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #0C0F11; border: 1px solid #3A4247"></span><strong style="font-size: 13px">bg</strong><span class="spec">#0C0F11</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #13181B; border: 1px solid #3A4247"></span><strong style="font-size: 13px">surface</strong><span class="spec">#13181B</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #262E33"></span><strong style="font-size: 13px">border</strong><span class="spec">#262E33</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #3A4247"></span><strong style="font-size: 13px">line</strong><span class="spec">#3A4247</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #FFFFFF"></span><strong style="font-size: 13px">text</strong><span class="spec">#FFFFFF</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #D5DBDE"></span><strong style="font-size: 13px">text-2</strong><span class="spec">#D5DBDE</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #9AA3A8"></span><strong style="font-size: 13px">muted</strong><span class="spec">#9AA3A8</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: var(--accent)"></span><strong style="font-size: 13px">accent</strong><span class="spec">#8FD3FF</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #06182A; border: 1px solid #3A4247"></span><strong style="font-size: 13px">on-accent</strong><span class="spec">#06182A</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="height: 80px; background: #FF8A7A"></span><strong style="font-size: 13px">error</strong><span class="spec">#FF8A7A</span></div>
+</div>
+<p class="spec" style="margin: 0">Contrast: text, text-2 en muted halen AA op bg en surface. Accent enkel als vlak met on-accent-tekst, of als tekst/lijn op donkere achtergrond — nooit witte tekst op accent.</p>
+</section>
+
+<!-- TOKENS: TYPE -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">02 — Typografie · Archivo (variabel: wdth 62–125, wght 300–800)</h2>
+<div class="block" style="gap: 0; padding: 0 32px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">display-1 · H1<br>wide 125% · 700 · clamp(30px, 3.9vw, 56px) / 1.08 · uppercase</span><span class="wide" style="flex: 1 1 400px; font-size: clamp(30px, 3.9vw, 56px); line-height: 1.08; font-weight: 700">Een website die klanten oplevert</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">display-2 · sectietitel<br>wide 125% · 700 · clamp(28px, 3.2vw, 46px) / 1.1</span><span class="wide" style="flex: 1 1 400px; font-size: clamp(28px, 3.2vw, 46px); line-height: 1.1; font-weight: 700">Zo werkt het</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">heading-s · kaarttitel<br>wide 125% · 700 · 16–18px</span><span class="wide" style="flex: 1 1 400px; font-size: 18px; font-weight: 700">Branding + Website</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">eyebrow<br>wide 125% · 600 · 12px · tracking .16em · muted</span><span class="eyebrow" style="flex: 1 1 400px">03 — Wat ik doe</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">body-l<br>normaal · 400 · 18px / 1.55 · text-2</span><span style="flex: 1 1 400px; font-size: 18px; line-height: 1.55; color: #D5DBDE">Ik ontwerp en bouw snelle, duidelijke websites voor kleine en middelgrote bedrijven.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid #262E33"><span class="spec" style="flex: 0 0 260px">body<br>normaal · 400 · 16px / 1.55</span><span style="flex: 1 1 400px; font-size: 16px; line-height: 1.55; color: #C9D0D4">Jij geeft input, ik pas aan.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: baseline; padding: 24px 0"><span class="spec" style="flex: 0 0 260px">label / nav<br>wide 112–125% · 600–700 · 12–13px · tracking .08–.1em</span><span class="wide" style="flex: 1 1 400px; font-size: 12px; font-weight: 600; letter-spacing: .1em">Website-URL · Over mij</span></div>
+</div>
+<p class="spec" style="margin: 0">Uppercase enkel via CSS (text-transform), nooit in de bron-tekst: zo blijft de inhoud vertaalbaar en leesbaar voor screenreaders.</p>
+</section>
+
+<!-- TOKENS: SPACING -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">03 — Ruimte, raster, hoeken</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px">
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Container</strong><span class="spec">max-width 1280px · padding-inline clamp(20px, 5vw, 64px)</span></div>
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Sectie</strong><span class="spec">padding-block clamp(72px, 9vw, 140px) · mobiel 64px</span></div>
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Gaps</strong><span class="spec">4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 56 px</span></div>
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Hoeken</strong><span class="spec">knoppen &amp; velden 4px · kaarten &amp; foto's 0 · pill &amp; ring 999px</span></div>
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Breakpoint</strong><span class="spec">820px: nav → menuknop · grids met auto-fit/minmax stapelen vanzelf</span></div>
+<div class="block" style="gap: 8px"><strong style="font-size: 14px">Touch</strong><span class="spec">elk klikdoel ≥ 44 × 44px</span></div>
+</div>
+</section>
+
+<!-- BUTTONS -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">04 — Knoppen · Button.astro (variant: primary | secondary | link-ring)</h2>
+<div class="block">
+<div class="row"><span class="spec" style="width: 120px">primary</span><button class="btn btn-acc">Start mijn audit</button><button class="btn btn-acc is-hover">Hover</button><button class="btn btn-acc is-focus">Focus</button><button class="btn btn-acc" disabled="">Uitgeschakeld</button></div>
+<div class="row"><span class="spec" style="width: 120px">secondary</span><button class="btn btn-ghost">Mail me direct</button><button class="btn btn-ghost is-hover">Hover</button><button class="btn btn-ghost is-focus">Focus</button><button class="btn btn-ghost" disabled="">Uitgeschakeld</button></div>
+<div class="row"><span class="spec" style="width: 120px">link-ring</span><a href="#" style="display: inline-flex; align-items: center; gap: 16px; text-decoration: none"><span class="ring"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span><span class="wide" style="font-size: 14px; font-weight: 600">Bekijk mijn werk</span></a></div>
+<div class="row"><span class="spec" style="width: 120px">tag</span><span class="wide" style="padding: 8px 12px; font-size: 11px; font-weight: 700; background: var(--accent); color: #06182A">Conceptproject</span></div>
+<p class="spec" style="margin: 0">Hoogte 52px (44px in de nav). Mobiel: primaire knoppen op volle breedte. Een knop die naar een pagina gaat is een &lt;a&gt;, een formulierknop een &lt;button&gt;.</p>
+</div>
+</section>
+
+<!-- FORM FIELDS -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">05 — Formuliervelden · Field.astro, Checkbox.astro</h2>
+<div class="block">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px">
+<div class="field"><label for="k1">Standaard</label><input id="k1" type="url" placeholder="www.jouwbedrijf.be"></div>
+<div class="field focus"><label for="k2">Focus</label><input id="k2" type="url" value="www.bakkerij-"></div>
+<div class="field"><label for="k3">Ingevuld</label><input id="k3" type="email" value="naam@jouwbedrijf.be"></div>
+<div class="field error"><label for="k4">Fout</label><input id="k4" type="email" value="naam@" aria-invalid="true" aria-describedby="k4e"><span id="k4e" class="err"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 7v6M12 17h.01"></path><circle cx="12" cy="12" r="10"></circle></svg>Vul een geldig e-mailadres in.</span></div>
+</div>
+<label class="check"><input type="checkbox"><span>Ik ga akkoord met de <a href="#">privacyverklaring</a>.</span></label>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 300px; border: 1px solid var(--accent); padding: 20px; display: flex; gap: 14px; align-items: flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" style="color: var(--accent); flex: none"><path d="M5 12l5 5 9-10"></path></svg><div><strong style="display: block; margin-bottom: 4px">Gelukt.</strong><span style="font-size: 14px; color: #C9D0D4">Je audit komt binnen [48 uur] in je mailbox.</span></div></div>
+<div style="flex: 1 1 300px; border: 1px solid #FF8A7A; padding: 20px; display: flex; gap: 14px; align-items: flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="2.4" aria-hidden="true" style="flex: none"><path d="M12 7v6M12 17h.01"></path><circle cx="12" cy="12" r="10"></circle></svg><div><strong style="display: block; margin-bottom: 4px">Er ging iets mis.</strong><span style="font-size: 14px; color: #C9D0D4">Probeer opnieuw of mail naar info@elvate.be.</span></div></div>
+</div>
+<p class="spec" style="margin: 0">Labels altijd zichtbaar boven het veld (geen placeholder als label). Fout: rode rand + tekst onder het veld, gekoppeld met aria-describedby. Na verzenden: bevestiging op dezelfde plek als het formulier.</p>
+</div>
+</section>
+
+<!-- ACCORDION -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">06 — Accordeon · Faq.astro (native &lt;details&gt;, geen JS)</h2>
+<div class="block">
+<div style="border-top: 1px solid #3A4247">
+<details style="border-bottom: 1px solid #3A4247"><summary style="display: flex; justify-content: space-between; gap: 16px; padding: 22px 0; font-size: 18px; font-weight: 600">Gesloten<span class="faq-icon" aria-hidden="true" style="font-size: 24px; font-weight: 300; line-height: 1; color: var(--accent)">+</span></summary><p style="margin: 0 0 22px; font-size: 16px; line-height: 1.55; color: #C9D0D4">Antwoord.</p></details>
+<details open="" style="border-bottom: 1px solid #3A4247"><summary style="display: flex; justify-content: space-between; gap: 16px; padding: 22px 0; font-size: 18px; font-weight: 600">Open<span class="faq-icon" aria-hidden="true" style="font-size: 24px; font-weight: 300; line-height: 1; color: var(--accent)">+</span></summary><p style="margin: 0 0 22px; font-size: 16px; line-height: 1.55; color: #C9D0D4">Het plusteken draait 45° naar een kruisje. Vraag 18px/600, antwoord 16px.</p></details>
+</div>
+</div>
+</section>
+
+<!-- CARDS -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">07 — Kaarten</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">ServiceCard (foto + overlay)</span>
+<article class="ph" style="min-height: 360px; background: linear-gradient(180deg,#56656e,#1d2427); display: flex; flex-direction: column; justify-content: flex-end; padding: 24px"><div style="position: absolute; inset: 0; background: linear-gradient(0deg,rgba(8,10,12,.88),rgba(8,10,12,0) 60%)"></div><div style="position: relative; display: flex; flex-direction: column; gap: 8px"><h3 class="wide" style="margin: 0; font-size: 26px; font-weight: 700">Websites</h3><p style="margin: 0; font-size: 15px; line-height: 1.5; color: #D5DBDE">Eén regel resultaat.</p></div></article></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">ProjectCard (tag + foto)</span>
+<article class="ph" style="min-height: 360px; background: linear-gradient(160deg,#cfc2ab,#6d5d46); display: flex; flex-direction: column; justify-content: flex-end; padding: 24px"><div style="position: absolute; inset: 0; background: linear-gradient(0deg,rgba(8,10,12,.85),rgba(8,10,12,0) 55%)"></div><span class="wide" style="position: absolute; top: 16px; left: 16px; padding: 7px 10px; font-size: 10px; font-weight: 700; background: var(--accent); color: #06182A">Conceptproject</span><div style="position: relative; display: flex; flex-direction: column; gap: 8px"><h3 class="wide" style="margin: 0; font-size: 22px; font-weight: 700">Appliqué</h3><p style="margin: 0; font-size: 14px; line-height: 1.5; color: #D5DBDE">Korte omschrijving.</p></div></article></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">PriceCard (standaard / uitgelicht)</span>
+<article style="background: #13181B; border: 1px solid #262E33; padding: 28px; display: flex; flex-direction: column; gap: 14px"><h3 class="wide" style="margin: 0; font-size: 16px; font-weight: 700">Website</h3><p style="margin: 0"><span style="font-size: 13px; color: #9AA3A8">vanaf</span><span class="wide" style="display: block; font-size: 34px; font-weight: 600">[€1.500]</span></p></article>
+<article style="background: #13181B; border: 1px solid var(--accent); padding: 28px; display: flex; flex-direction: column; gap: 14px"><h3 class="wide" style="margin: 0; font-size: 16px; font-weight: 700; color: var(--accent)">Branding + Website</h3><p style="margin: 0"><span style="font-size: 13px; color: #9AA3A8">vanaf</span><span class="wide" style="display: block; font-size: 34px; font-weight: 600">[€2.800]</span></p></article></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">Step (desktop horizontaal)</span><div style="display: flex; flex-direction: column; gap: 14px"><div style="display: flex; align-items: center; gap: 12px"><span style="width: 14px; height: 14px; border-radius: 999px; background: var(--accent)"></span><span style="flex: 1; height: 1px; background: var(--accent)"></span></div><span class="wide" style="font-size: 36px; font-weight: 300">01</span><h3 class="wide" style="margin: 0; font-size: 15px; font-weight: 700">Kennismaking</h3></div></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">ProofItem (genummerd)</span><div style="display: flex; gap: 20px"><span class="wide" style="flex: 0 0 40px; font-size: 14px; font-weight: 700; color: var(--accent)">01</span><div><strong style="display: block; font-size: 19px; margin-bottom: 4px">Persoonlijk</strong><span style="font-size: 15px; color: #C9D0D4">Eén regel uitleg.</span></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">GlassPanel (over foto)</span><div class="ph" style="height: 150px; background: linear-gradient(180deg,#6b6a62,#202627); padding: 20px; display: flex; align-items: flex-end"><div style="position: relative; background: rgba(16,20,23,.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); padding: 14px 16px; font-size: 13px">rgba(16,20,23,.86) + blur 10px</div></div></div>
+</div>
+</section>
+
+<!-- NAV + MOBIEL MENU + TAAL + PILL -->
+<section style="display: flex; flex-direction: column; gap: 20px">
+<h2 class="eyebrow" style="margin: 0">08 — Navigatie, taalwissel, audit-pill · Header.astro, LangSwitch.astro, AuditPill.astro</h2>
+<div class="block" style="padding: 0; gap: 0">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 32px; border-bottom: 1px solid #262E33">
+<span style="font-size: 24px; font-weight: 700; letter-spacing: -0.03em">elvate</span>
+<div style="display: flex; align-items: center; gap: 40px">
+<div class="wide" style="display: flex; gap: 40px; font-size: 12px; font-weight: 500"><a href="#" aria-current="page" style="text-decoration: none; color: var(--accent)">Home</a><a href="#" style="text-decoration: none">Werk</a><a href="#" style="text-decoration: none">Over mij</a><a href="#" style="text-decoration: none">Contact</a></div>
+<div role="group" aria-label="Taal" class="wide" style="display: flex; gap: 4px; font-size: 12px; font-weight: 600"><a href="#" aria-current="true" style="text-decoration: none; padding: 6px; color: var(--accent)">NL</a><span aria-hidden="true" style="padding: 6px 0; color: #7D878D">/</span><a href="#" style="text-decoration: none; padding: 6px">EN</a></div>
+<a href="#" class="btn btn-acc" style="min-height: 44px">Gratis audit</a>
+</div>
+</div>
+<p class="spec" style="margin: 0; padding: 16px 32px">Desktop: actieve pagina in accent + aria-current="page". Taalwissel linkt naar dezelfde pagina in de andere taal (/werk ↔ /en/work), niet naar de homepage.</p>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">Mobiel menu — klik op de knop (Play)</span>
+<div style="position: relative; width: 390px; max-width: 100%; height: 640px; overflow: hidden; background: #0C0F11; border: 1px solid #262E33">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 20px">
+<span style="font-size: 22px; font-weight: 700; letter-spacing: -0.03em">elvate</span>
+<button aria-expanded="true" aria-controls="mmenu" aria-label="Menu sluiten" style="width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.35); border-radius: 4px; background: transparent; color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<nav id="mmenu" aria-label="Hoofdnavigatie" style="position: absolute; inset: 80px 0 0; background: #0C0F11; padding: 16px 20px 24px; display: flex; flex-direction: column; justify-content: space-between">
+<div class="wide" style="display: flex; flex-direction: column; border-top: 1px solid #3A4247; font-size: 24px; font-weight: 700">
+<a href="#" aria-current="page" style="text-decoration: none; padding: 18px 0; border-bottom: 1px solid #3A4247; color: var(--accent)">Home</a>
+<a href="#" style="text-decoration: none; padding: 18px 0; border-bottom: 1px solid #3A4247">Werk</a>
+<a href="#" style="text-decoration: none; padding: 18px 0; border-bottom: 1px solid #3A4247">Over mij</a>
+<a href="#" style="text-decoration: none; padding: 18px 0; border-bottom: 1px solid #3A4247">Contact</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<a href="#" class="btn btn-acc" style="width: 100%">Gratis website-audit</a>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #C9D0D4"><a href="tel:+32499702928">+32 499 70 29 28</a><span class="wide" style="font-size: 12px; font-weight: 600"><a href="#" aria-current="true" style="color: var(--accent); text-decoration: none; padding: 12px 6px">NL</a><a href="#" style="text-decoration: none; padding: 12px 6px">EN</a></span></div>
+</div>
+</nav>
+</div>
+<span class="spec" style="max-width: 390px">Volledig scherm onder de topbalk. Escape sluit, focus blijft in het menu, body scrollt niet mee. Dit is het enige stukje JS naast de pill.</span>
+</div>
+
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 10px"><span class="spec">AuditPill — desktop: vast linksonder</span>
+<div style="display: inline-flex; align-self: flex-start; align-items: center; background: rgba(16,20,23,.92); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; padding: 4px">
+<a href="#" class="wide" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; font-size: 12px; font-weight: 700; text-decoration: none"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--accent)"></span>Gratis website-audit →</a>
+<button aria-label="Sluiten" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; color: #fff; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div></div>
+<ul class="spec" style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px">
+<li>Verschijnt pas na de hero (wanneer de hero-CTA uit beeld is).</li>
+<li>Verbergt zich wanneer een auditformulier in beeld is, en op /gratis-audit zelf.</li>
+<li>Sluiten = onthouden voor de sessie (sessionStorage).</li>
+<li>Mobiel: volle breedte min 12px marge, 12px boven de onderrand; de laatste sectie krijgt 80px extra ruimte onderaan zodat niets bedekt wordt.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</body>
+</html>
