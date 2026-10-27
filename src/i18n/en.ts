@@ -126,7 +126,7 @@ export const en: Widen<typeof nl> = {
         'Speed, mobile use and findability. 3 to 5 concrete improvements, in your inbox within [48 hours].',
       facts: [
         { big: 'Fixed price', small: 'no surprises', smallPhone: 'no surprises' },
-        { big: '4 weeks', small: 'usually live', smallPhone: 'usually live' },
+        { big: 'SEO Optimized', small: 'Found on Google', smallPhone: 'Found on Google' },
         { big: '1 contact', small: 'directly with me', smallPhone: 'directly' },
       ],
     },

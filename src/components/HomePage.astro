@@ -198,7 +198,7 @@ const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gra
         <Eyebrow as="p" number="09" text={h.faq.eyebrow} />
         <h2 class="wide faq-title">{h.faq.title}</h2>
       </div>
-      <div class="faq-list"><FaqList items={h.faq.items} openIndex={1} /></div>
+      <div class="faq-list"><FaqList items={h.faq.items} /></div>
     </div>
   </Section>
 
@@ -212,8 +212,14 @@ const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gra
           <Button href={`mailto:${CONTACT.email}`} variant="secondary" class="big">{h.closing.mail}</Button>
         </div>
         <div class="closing-contact">
-          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-          <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+          <a href={`mailto:${CONTACT.email}`}>
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+            {CONTACT.email}
+          </a>
+          <a href={CONTACT.phoneHref}>
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" /></svg>
+            {CONTACT.phone}
+          </a>
         </div>
       </div>
       <div class="closing-form">
@@ -351,6 +357,8 @@ const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gra
   .closing-title { margin: 0; font-size: 24px; line-height: 1.12; font-weight: 700; }
   .closing-actions { display: flex; flex-direction: column; gap: 12px; }
   .closing-contact { display: none; flex-direction: column; gap: 8px; font-size: 18px; }
+  .closing-contact a { display: inline-flex; align-items: center; gap: 10px; }
+  .closing-contact .icon { flex: none; color: var(--accent); }
   .closing-form { padding-top: 16px; border-top: 1px solid var(--border); }
   .closing :global(.big) { min-height: 56px; }
   @media (min-width: 820px) {

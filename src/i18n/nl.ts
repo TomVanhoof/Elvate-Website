@@ -120,7 +120,7 @@ export const nl = {
         'Snelheid, mobiel gebruik en vindbaarheid. 3 tot 5 concrete verbeterpunten, binnen [48 uur] in je mailbox.',
       facts: [
         { big: 'Vaste prijs', small: 'geen verrassingen', smallPhone: 'geen verrassingen' },
-        { big: '4 weken', small: 'meestal live', smallPhone: 'meestal live' },
+        { big: 'SEO geoptimaliseerd', small: 'Vindbaar op Google', smallPhone: 'Vindbaar op Google' },
         { big: '1 contact', small: 'rechtstreeks met mij', smallPhone: 'rechtstreeks' },
       ],
     },
@@ -201,12 +201,11 @@ export const nl = {
       eyebrow: 'FAQ',
       title: 'Veelgestelde vragen',
       items: [
-        { q: 'Wat kost een website?', a: 'Vanaf [€1.500]. Zie de pakketten.' },
-        { q: 'Hoe lang duurt het?', a: '4 weken, afhankelijk van de omvang.' },
-        { q: 'Wie is eigenaar van de website?', a: '[Jij, volledig.]' },
-        { q: 'Wat als ik na de lancering iets wil aanpassen?', a: 'Via een onderhoudsplan of als losse aanpassing.' },
-        { q: 'Wat heb ik van jou nodig om te starten?', a: 'Teksten, beelden en je wensen. Ik help waar nodig.' },
-        { q: 'Werk je ook in het Engels of Frans?', a: '[Ja, een extra taal is beschikbaar als add-on.]' },
+        { q: 'Wat kost een website?', a: 'Een website hoeft niet duur te zijn. Een eenvoudige website kan je al voor minder dan 1000 euro bestellen. Heb je graag meerdere pagina\'s?, een huisstijl en logo? kan dit voor minder dan 1500 euro. neem contact met me op en we bespreken samen wat mogelijk is met jouw budget.' },
+        { q: 'Hoe lang duurt het?', a: 'Dit is zeer afhankelijk van de omvang van de website en van snelheid van de communicatie. Maar het is mogelijk om een website online te krijgen in minder dan 1 maand. Voor complexere websites zal de tijdslijn van meerdere zaken afhenkelijk zijn. Neem contact op en we bekijken hoelang de doorlooptijd zal zijn.' },
+        { q: 'Wie is eigenaar van de website?', a: 'De website wordt op jouw maat gemaakt en zal ook jouw eigendom zijn. Je kan zelf kiezen waar en hoe je hem host. Pas je in de toekomst graag enkele dingen aan kan je contact opnemen en zorg ik voor een oplossing.' },
+        { q: 'Wat als ik na de lancering iets wil aanpassen?', a: 'Ofwel voorzien we tijdens het creatieproces al een manier waarop je zelf bepaalde content kan aanpassen en posten. Ofwel neem je contact op en zorgen we voor enkele kleine aanpassingen.' },
+        { q: 'Wat heb ik van jou nodig om te starten?', a: 'Je kan starten van helemaal niets en samen bouwen we een plan uit om alle nodige content te voorzien. Of je kan starten van een bestaande website die al content heeft waarbij we bekijken wat herbruikt kan worden. Lever je zelf graag content aan doordat je reeds gewerkt hebt met een grafisch ontwerper en wil je enkel het technische laten doen, dan is dit ook zeker mogelijk.' },
       ],
     },
     closing: {

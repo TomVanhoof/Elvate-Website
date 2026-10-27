@@ -6,4 +6,40 @@ const inline = svg
   .replace(/fill="white"/g, 'fill="currentColor"')
   .replace(/ width="\d+" height="\d+"/, ` width="${Math.round((height * 175) / 46)}" height="${height}" aria-hidden="true" focusable="false"`);
 ---
-<Fragment set:html={inline} />
+<span class="logo-fx">
+  <Fragment set:html={inline} />
+  <span class="logo-ink" aria-hidden="true"><Fragment set:html={inline} /></span>
+</span>
+
+<style>
+  @property --r { syntax: '<length>'; inherits: true; initial-value: 0px; }
+
+  .logo-fx { position: relative; display: inline-flex; --x: 50%; --y: 50%; --r: 0px; }
+  /* Blue copy of the logo, revealed by a soft-edged circle growing from the cursor. */
+  .logo-ink {
+    position: absolute; inset: 0; display: inline-flex; pointer-events: none;
+    color: var(--accent);
+    -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), #000 calc(var(--r) - 28px), transparent var(--r));
+    mask-image: radial-gradient(circle at var(--x) var(--y), #000 calc(var(--r) - 28px), transparent var(--r));
+    transition: --r .7s ease-out;
+  }
+  @media (hover: hover) {
+    :global(a:hover) > .logo-fx { --r: 260px; }
+  }
+  :global(a:focus-visible) > .logo-fx { --r: 260px; }
+  @media (prefers-reduced-motion: reduce) {
+    .logo-ink { transition: none; }
+  }
+</style>
+
+<script>
+  // Start the spread where the pointer enters. Delegated, so it survives ClientRouter swaps.
+  document.addEventListener('pointerover', (e) => {
+    const link = (e.target as Element).closest?.('a');
+    const fx = link?.querySelector<HTMLElement>('.logo-fx');
+    if (!link || !fx || link.contains(e.relatedTarget as Node | null)) return;
+    const box = fx.getBoundingClientRect();
+    fx.style.setProperty('--x', `${e.clientX - box.left}px`);
+    fx.style.setProperty('--y', `${e.clientY - box.top}px`);
+  });
+</script>

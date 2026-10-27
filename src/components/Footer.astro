@@ -54,9 +54,12 @@ const legal = links.filter((l) => l.id === 'privacy' || l.id === 'terms');
     display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px;
     font-size: var(--fs-small); color: var(--muted);
   }
-  .id { display: flex; flex-direction: column; gap: 4px; }
-  .id a:not(.logo) { display: inline-flex; align-items: center; min-height: var(--tap); }
-  .logo { color: #fff; margin-bottom: 8px; }
+  .id { display: flex; flex-direction: column; align-items: flex-start; }
+  /* Every row (links and the VAT span alike) gets the same height so the stack spaces evenly. */
+  .id > :not(.logo) { display: inline-flex; align-items: center; min-height: 28px; }
+  .logo { display: inline-flex; align-items: center; min-height: var(--tap); margin-bottom: 16px; color: #fff; }
+  /* Same row height as the logo so nav and language switch line up with it. */
+  .site-footer :global(.lang-switch) { align-self: flex-start; min-height: var(--tap); }
   .name { font-size: 26px; font-weight: 700; letter-spacing: -.03em; color: #fff; }
   .links { display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: flex-start; font-size: 12px; }
   .links a { display: inline-flex; align-items: center; min-height: var(--tap); }
@@ -67,5 +70,7 @@ const legal = links.filter((l) => l.id === 'privacy' || l.id === 'terms');
   /* Room for the fixed audit pill on phones (BUILD-BRIEF §8). */
   @media (max-width: 819px) {
     .site-footer:not(.slim) { padding-bottom: 110px; }
+    /* Keep touch targets at full size on phones. */
+    .id a:not(.logo) { min-height: var(--tap); }
   }
 </style>

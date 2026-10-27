@@ -1,22 +1,56 @@
 ---
 interface Props {
   items: readonly { readonly q: string; readonly a: string }[];
-  /** Zero-based index of the item that starts open (Home opens the second). */
-  openIndex?: number;
 }
-const { items, openIndex } = Astro.props;
+const { items } = Astro.props;
 ---
 <div class="faq">
-  {items.map((item, i) => (
-    <details open={i === openIndex}>
+  {items.map((item) => (
+    <details>
       <summary>
         <span>{item.q}</span>
         <span class="icon" aria-hidden="true">+</span>
       </summary>
-      <p>{item.a}</p>
+      <div class="body"><p>{item.a}</p></div>
     </details>
   ))}
 </div>
+
+<script>
+  const DURATION = 250;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const running = new WeakMap<HTMLDetailsElement, Animation>();
+
+  document.querySelectorAll<HTMLDetailsElement>('.faq details').forEach((details) => {
+    const summary = details.querySelector('summary')!;
+    const body = details.querySelector<HTMLElement>('.body')!;
+
+    summary.addEventListener('click', (e) => {
+      if (reduceMotion.matches) {
+        details.classList.toggle('is-open', !details.open);
+        return;
+      }
+      e.preventDefault();
+      running.get(details)?.cancel();
+
+      const opening = !details.open;
+      if (opening) details.open = true;
+      details.classList.toggle('is-open', opening);
+
+      const full = body.scrollHeight;
+      const anim = body.animate(
+        { height: opening ? ['0px', `${full}px`] : [`${body.offsetHeight}px`, '0px'] },
+        { duration: DURATION, easing: 'ease' },
+      );
+      running.set(details, anim);
+      anim.onfinish = () => {
+        if (!opening) details.open = false;
+        running.delete(details);
+      };
+      anim.oncancel = () => running.delete(details);
+    });
+  });
+</script>
 
 <style>
   .faq { border-top: 1px solid var(--line); }
@@ -29,6 +63,8 @@ const { items, openIndex } = Astro.props;
   summary::-webkit-details-marker { display: none; }
   .icon { font-size: 22px; font-weight: 300; line-height: 1; color: var(--accent); transition: transform .2s ease; flex: none; }
   details[open] .icon { transform: rotate(45deg); }
+  details:not(.is-open)[open] .icon { transform: none; }
+  .body { overflow: hidden; }
   p { margin: 0 0 18px; font-size: 15px; line-height: 1.55; color: var(--text-3); }
   @media (min-width: 820px) {
     summary { gap: 16px; padding: 22px 0; font-size: 18px; }
