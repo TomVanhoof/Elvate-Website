@@ -1,6 +1,6 @@
 <script>
   // Progressive enhancement for .audit-form / .contact-form. Without JS the form does a
-  // normal POST to the PHP script, which redirects to the thanks page.
+  // normal POST to Web3Forms.
   type Control = HTMLInputElement | HTMLTextAreaElement;
 
   document.addEventListener('astro:page-load', () => {
@@ -16,7 +16,7 @@
       const msg = (key: string) => form.dataset[key] ?? '';
       const controls = () =>
         Array.from(form.querySelectorAll<Control>('input, textarea')).filter(
-          (el) => el.type !== 'hidden' && el.name !== 'company',
+          (el) => el.type !== 'hidden' && el.name !== 'botcheck',
         );
 
       const setError = (el: Control, text: string) => {
@@ -97,7 +97,7 @@
             headers: { Accept: 'application/json' },
           });
           const data = await response.json().catch(() => null);
-          show(response.ok && data && data.ok ? 'success' : 'error');
+          show(response.ok && data && data.success ? 'success' : 'error');
         } catch {
           show('error');
         } finally {

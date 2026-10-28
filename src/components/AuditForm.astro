@@ -6,7 +6,7 @@ import FormStatus from './FormStatus.astro';
 import FormScript from './FormScript.astro';
 import { path, type Lang } from '../i18n/routes';
 import { t } from '../i18n';
-import { FORM_ENDPOINT } from '../config';
+import { FORM_ENDPOINT, WEB3FORMS_ACCESS_KEY } from '../config';
 
 interface Props {
   lang: Lang;
@@ -30,12 +30,14 @@ const f = t(lang).forms;
     data-err-privacy={f.errPrivacy}
     data-sending={f.sending}
   >
+    <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+    <input type="hidden" name="subject" value="Elvate website: gratis audit" />
     <input type="hidden" name="form" value="audit" />
     <input type="hidden" name="lang" value={lang} />
     <input type="hidden" name="ts" value="" data-ts />
     <div class="trap" aria-hidden="true">
       <label for={`${idPrefix}-hp`}>Leave this field empty</label>
-      <input id={`${idPrefix}-hp`} name="company" type="text" tabindex="-1" autocomplete="off" />
+      <input id={`${idPrefix}-hp`} name="botcheck" type="checkbox" tabindex="-1" autocomplete="off" />
     </div>
 
     <div class="fields">

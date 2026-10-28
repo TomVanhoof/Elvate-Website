@@ -1,0 +1,41 @@
+{
+  "order": 1,
+  "title": "Momentum Coaching",
+  "type": {
+    "nl": "Personal training · Website",
+    "en": "Personal training · Website"
+  },
+  "concept": false,
+  "brief": {
+    "nl": "Een website voor een personal trainer die zich wil onderscheiden. In een sector vol zwart en donkere extremen koos ik het omgekeerde: lichte kleuren met opvallende accenten.",
+    "en": "A website for a personal trainer who wants to stand out. In an industry full of black and dark extremes, I chose the opposite: light colours with bold accents."
+  },
+  "audience": {
+    "nl": "Mensen in en rond Leuven die beter willen bewegen, sterker willen worden en zich goed in hun lichaam willen voelen. Van beginner in de gym tot wie op zoek is naar een nieuw record.",
+    "en": "People in and around Leuven who want to move better, get stronger and feel good in their body. From gym beginners to those chasing a new personal record."
+  },
+  "decisions": {
+    "nl": "Licht en sportief, zoals je dat ook in moderne sneakers ziet: zachte neutrale vlakken met zonsondergangoranje en lila als accent. Een grotesk lettertype voor kracht, een cursief serif-lettertype voor de persoonlijke noot.",
+    "en": "Light and sporty, the way you see it in modern sneakers: soft neutral surfaces with sunset orange and lilac as accents. A grotesque typeface for strength, an italic serif for the personal touch."
+  },
+  "colors": [
+    { "hex": "#FCCA82" },
+    { "hex": "#D7D7F4" },
+    { "hex": "#212121" },
+    { "hex": "#F2F2F2" },
+    { "hex": "#FDFEFF" }
+  ],
+  "font": "Bricolage Grotesque, Instrument Serif, Figtree",
+  "logo": "../../assets/work/momentum-logo.svg",
+  "hero": "../../assets/work/momentum-hero.png",
+  "heroAlt": {
+    "nl": "Startpagina van Momentum Coaching: personal trainer in de gym met de kop 'Move better. Get stronger. Feel amazing.'",
+    "en": "Home page of Momentum Coaching: a personal trainer in the gym with the headline 'Move better. Get stronger. Feel amazing.'"
+  },
+  "screens": [
+    { "image": "../../assets/work/momentum-1.png", "alt": { "nl": "Momentum Coaching, over de coach en certificaten", "en": "Momentum Coaching, about the coach and certificates" } },
+    { "image": "../../assets/work/momentum-2.png", "alt": { "nl": "Momentum Coaching, werkwijze in vier stappen", "en": "Momentum Coaching, four-step approach" } },
+    { "image": "../../assets/work/momentum-3.png", "alt": { "nl": "Momentum Coaching, pakketten en prijzen", "en": "Momentum Coaching, packages and pricing" } },
+    { "image": "../../assets/work/momentum-4.png", "alt": { "nl": "Momentum Coaching, contactformulier", "en": "Momentum Coaching, contact form" } }
+  ]
+}

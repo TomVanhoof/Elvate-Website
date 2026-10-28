@@ -21,7 +21,13 @@ export const nl = {
     terms: 'Voorwaarden',
     legalLabel: 'Juridisch',
   },
-  pill: { text: 'Gratis website-audit', close: 'Sluiten' },
+  pill: {
+    text: 'Gratis website-audit',
+    title: 'Gratis audit',
+    body: 'Snelheid, mobiel gebruik en vindbaarheid. 3 tot 5 concrete verbeterpunten, binnen 1 week in je mailbox.',
+    cta: 'Vraag je gratis website-audit aan',
+    close: 'Sluiten',
+  },
   forms: {
     url: 'Website-URL',
     urlPlaceholder: 'www.jouwbedrijf.be',
@@ -32,7 +38,7 @@ export const nl = {
     website: 'Website (optioneel)',
     auditSubmit: 'Start mijn audit',
     contactSubmit: 'Verstuur bericht',
-    turnaround: 'Binnen [48 uur] in je mailbox.',
+    turnaround: 'Binnen 1 week in je mailbox.',
     privacyBefore: 'Ik ga akkoord met de ',
     privacyLink: 'privacyverklaring',
     privacyAfter: '.',
@@ -42,7 +48,7 @@ export const nl = {
     errPrivacy: 'Vink aan dat je akkoord gaat met de privacyverklaring.',
     sending: 'Bezig…',
     successTitle: 'Gelukt.',
-    successAudit: 'Je audit komt binnen [48 uur] in je mailbox.',
+    successAudit: 'Je audit komt binnen 1 week in je mailbox.',
     successContact: 'Bedankt voor je bericht. Ik antwoord zo snel mogelijk.',
     errorTitle: 'Er ging iets mis.',
     errorBefore: 'Probeer opnieuw of mail naar ',
@@ -52,7 +58,7 @@ export const nl = {
     title: 'Bedankt — elvate',
     description: 'Je bericht is verstuurd.',
     heading: 'Bedankt.',
-    audit: 'Je audit komt binnen [48 uur] in je mailbox.',
+    audit: 'Je audit komt binnen 1 week in je mailbox.',
     contact: 'Bedankt voor je bericht. Ik antwoord zo snel mogelijk.',
     home: 'Terug naar home',
   },
@@ -64,7 +70,7 @@ export const nl = {
     eyebrow: 'Gratis website-audit',
     h1: 'Haalt jouw website alles uit zijn mogelijkheden?',
     text: 'Ik analyseer je huidige website op snelheid, mobiel gebruik en vindbaarheid, en stuur je 3 tot 5 concrete verbeterpunten. Gratis, zonder verplichtingen.',
-    checks: ['Gratis', 'Zonder verplichtingen', 'Binnen [48 uur]'],
+    checks: ['Gratis', 'Zonder verplichtingen', 'Binnen 1 week'],
     formTitle: 'Start je audit',
     get: {
       eyebrow: 'Wat je krijgt',
@@ -81,7 +87,7 @@ export const nl = {
       items: [
         { title: 'Je vult je URL in', text: 'Website-URL en e-mailadres. Meer heb ik niet nodig.' },
         { title: 'Ik analyseer', text: 'Snelheid, mobiel gebruik en vindbaarheid.' },
-        { title: 'Jij krijgt je rapport', text: '3 tot 5 concrete verbeterpunten, binnen [48 uur] in je mailbox.' },
+        { title: 'Jij krijgt je rapport', text: '3 tot 5 concrete verbeterpunten, binnen 1 week in je mailbox.' },
       ],
     },
     sample: {
@@ -99,7 +105,7 @@ export const nl = {
       items: [
         { q: 'Is het echt gratis?', a: 'Ja. Gratis en zonder verplichtingen.' },
         { q: 'Wat moet ik aanleveren?', a: 'Enkel je website-URL en je e-mailadres.' },
-        { q: 'Wanneer krijg ik het rapport?', a: 'Binnen [48 uur] in je mailbox.' },
+        { q: 'Wanneer krijg ik het rapport?', a: 'Binnen 1 week in je mailbox.' },
         { q: 'Wat gebeurt er na de audit?', a: '[Jij beslist of je ermee verder wil.]' },
       ],
     },
@@ -114,10 +120,6 @@ export const nl = {
       h1: 'Een website die klanten oplevert, niet alleen een visitekaartje.',
       sub: 'Ik ontwerp en bouw snelle, duidelijke websites voor kleine en middelgrote bedrijven.',
       work: 'Bekijk mijn werk',
-      cta: 'Vraag je gratis website-audit aan',
-      panelTitle: 'Gratis audit',
-      panelText:
-        'Snelheid, mobiel gebruik en vindbaarheid. 3 tot 5 concrete verbeterpunten, binnen [48 uur] in je mailbox.',
       facts: [
         { big: 'Vaste prijs', small: 'geen verrassingen', smallPhone: 'geen verrassingen' },
         { big: 'SEO geoptimaliseerd', small: 'Vindbaar op Google', smallPhone: 'Vindbaar op Google' },
@@ -146,7 +148,7 @@ export const nl = {
     why: {
       eyebrow: 'Waarom elvate',
       title: 'Geen bureau. Gewoon ik.',
-      photoAlt: '[Foto van mij]',
+      photoAlt: 'Portret van Tom Van Hoof',
       items: [
         { title: 'Persoonlijk', text: 'Je werkt rechtstreeks met mij, geen tussenpersonen.' },
         { title: 'Snel', text: 'Sites gebouwd voor topsnelheid. [Lighthouse-scores na build]' },
@@ -156,7 +158,7 @@ export const nl = {
     steps: {
       eyebrow: 'Zo werkt het',
       title: 'Vier stappen',
-      timeBefore: 'Meestal live binnen ',
+      timeBefore: 'Live al vanaf ',
       time: '4 weken',
       timeAfter: '.',
       items: [
@@ -168,12 +170,11 @@ export const nl = {
     },
     work: {
       eyebrow: 'Mijn werk',
-      title: 'Conceptprojecten',
+      title: 'Projecten',
       all: 'Alle projecten →',
-      tag: 'Conceptproject',
       items: [
-        { title: 'Appliqué', line: 'Interieurontwerp. Website-concept, logo en huisstijl met natuurlijke kleuren die kwaliteit uitstralen.', alt: '[Alt-tekst: website-concept Appliqué]' },
-        { title: 'BlackBean', line: 'Koffiebrander. Website-concept in rustige, gedempte kleuren die de gezellige sfeer weerspiegelen.', alt: '[Alt-tekst: website-concept BlackBean]' },
+        { title: 'Momentum Coaching', tag: 'Echte website', line: 'Personal training. Een lichte, sportieve website met opvallende accentkleuren, bewust anders dan de donkere standaard in de sector.', alt: 'Website van Momentum Coaching' },
+        { title: 'BlackBean', tag: 'Conceptproject', line: 'Koffiebrander. Website-concept in rustige, gedempte kleuren die de gezellige sfeer weerspiegelen.', alt: '[Alt-tekst: website-concept BlackBean]' },
       ],
       yoursTitle: 'Jouw project hier?',
       yoursCta: 'Start met een gratis audit',
@@ -188,9 +189,9 @@ export const nl = {
       title: 'Vaste prijzen, vanaf',
       from: 'vanaf',
       plans: [
-        { name: 'Website', forWhom: 'Je hebt al een logo en huisstijl', price: '[€1.500]', includes: "Nieuwe site of redesign, tot ~5 pagina's, mobiel, basis-SEO, contactformulier, lancering." },
-        { name: 'Branding + Website', forWhom: 'Je start vanaf nul', price: '[€2.800]', includes: "Logo, huisstijl en alles uit Website, tot ~8 pagina's." },
-        { name: 'Webshop', forWhom: 'Je wil online verkopen', price: '[€4.000]', includes: 'Alles hierboven plus producten, betalingen en verzending.' },
+        { name: 'Website', forWhom: 'Je hebt al een logo en huisstijl', price: '€1.000', includes: "Nieuwe site of redesign, tot ~5 pagina's, mobiel, basis-SEO, contactformulier, lancering." },
+        { name: 'Branding + Website', forWhom: 'Je start vanaf nul', price: '€2.000', includes: "Logo, huisstijl en alles uit Website, tot ~8 pagina's." },
+        { name: 'Webshop', forWhom: 'Je wil online verkopen', price: '€4.000', includes: 'Alles hierboven plus producten, betalingen en verzending.' },
       ],
       addonsLabel: 'Add-ons',
       addons: "Foto's · Copywriting · Extra taal · Geavanceerde SEO · Onderhoudsplan",
@@ -216,11 +217,11 @@ export const nl = {
   },
   workPage: {
     title: 'Werk — elvate',
-    description: 'Conceptprojecten: van merk tot website.',
+    description: 'Een echte website voor een personal trainer en een conceptproject.',
     eyebrow: 'Werk',
     h1: 'Mijn werk',
     intro:
-      'Twee conceptprojecten: ik bedacht zelf de opdracht, en werkte die uit van merk tot website. Zo zie je hoe ik denk en ontwerp.',
+      'Een echte website voor een personal trainer, en een conceptproject waarvan ik zelf de opdracht bedacht. Zo zie je hoe ik denk en ontwerp.',
     tag: 'Conceptproject',
     brief: 'De opdracht',
     audience: 'Doelgroep',
@@ -243,7 +244,7 @@ export const nl = {
     h1: 'Hoi, ik ben Tom.',
     intro:
       'Ik ontwerp en bouw snelle, duidelijke websites voor kleine en middelgrote bedrijven in België. Alleen, zonder bureau ertussen.',
-    photoAlt: '[Foto van mij]',
+    photoAlt: 'Portret van Tom Van Hoof',
     drive: {
       eyebrow: 'Wat me drijft',
       paras: [
@@ -281,7 +282,7 @@ export const nl = {
     vat: 'Ondernemingsnr.',
     auditEyebrow: 'Liever eerst een analyse?',
     auditTitle: 'Vraag je gratis website-audit aan →',
-    auditText: '3 tot 5 verbeterpunten, binnen [48 uur].',
+    auditText: '3 tot 5 verbeterpunten, binnen 1 week.',
     formTitle: 'Stuur een bericht',
   },
   legal: {

@@ -1,4 +1,23 @@
+# Build / deps
 node_modules
 dist
 .astro
 .DS_Store
+.env
+.env.*
+
+# Source material, not part of site
+Potential Photos/
+design/
+design-brief.md
+BUILD-BRIEF.md
+TODO.md
+
+# AI agent config
+AGENTS.md
+.clinerules/
+.cursor/
+.github/copilot-instructions.md
+.opencode/
+.windsurf/
+.claude/

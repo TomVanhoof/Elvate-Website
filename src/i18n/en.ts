@@ -27,7 +27,13 @@ export const en: Widen<typeof nl> = {
   },
   lang_switch: { label: 'Language' },
   footer: { label: 'Footer', privacy: 'Privacy', terms: 'Terms', legalLabel: 'Legal' },
-  pill: { text: 'Free website audit', close: 'Close' },
+  pill: {
+    text: 'Free website audit',
+    title: 'Free audit',
+    body: 'Speed, mobile use and findability. 3 to 5 concrete improvements, in your inbox within 1 week.',
+    cta: 'Request your free website audit',
+    close: 'Close',
+  },
   forms: {
     url: 'Website URL',
     urlPlaceholder: 'www.yourcompany.be',
@@ -38,7 +44,7 @@ export const en: Widen<typeof nl> = {
     website: 'Website (optional)',
     auditSubmit: 'Start my audit',
     contactSubmit: 'Send message',
-    turnaround: 'In your inbox within [48 hours].',
+    turnaround: 'In your inbox within 1 week.',
     privacyBefore: 'I agree to the ',
     privacyLink: 'privacy statement',
     privacyAfter: '.',
@@ -48,7 +54,7 @@ export const en: Widen<typeof nl> = {
     errPrivacy: 'Please confirm you agree to the privacy statement.',
     sending: 'Sending…',
     successTitle: 'Done.',
-    successAudit: 'Your audit will be in your inbox within [48 hours].',
+    successAudit: 'Your audit will be in your inbox within 1 week.',
     successContact: 'Thanks for your message. I will reply as soon as I can.',
     errorTitle: 'Something went wrong.',
     errorBefore: 'Try again or email ',
@@ -58,7 +64,7 @@ export const en: Widen<typeof nl> = {
     title: 'Thanks — elvate',
     description: 'Your message has been sent.',
     heading: 'Thank you.',
-    audit: 'Your audit will be in your inbox within [48 hours].',
+    audit: 'Your audit will be in your inbox within 1 week.',
     contact: 'Thanks for your message. I will reply as soon as I can.',
     home: 'Back to home',
   },
@@ -70,7 +76,7 @@ export const en: Widen<typeof nl> = {
     eyebrow: 'Free website audit',
     h1: 'Is your website making the most of its potential?',
     text: 'I analyse your current website for speed, mobile use and findability, and send you 3 to 5 concrete improvements. Free, no obligation.',
-    checks: ['Free', 'No obligation', 'Within [48 hours]'],
+    checks: ['Free', 'No obligation', 'Within 1 week'],
     formTitle: 'Start your audit',
     get: {
       eyebrow: 'What you get',
@@ -87,7 +93,7 @@ export const en: Widen<typeof nl> = {
       items: [
         { title: 'You enter your URL', text: 'Website URL and email address. I need nothing more.' },
         { title: 'I analyse', text: 'Speed, mobile use and findability.' },
-        { title: 'You get your report', text: '3 to 5 concrete improvements, in your inbox within [48 hours].' },
+        { title: 'You get your report', text: '3 to 5 concrete improvements, in your inbox within 1 week.' },
       ],
     },
     sample: {
@@ -105,7 +111,7 @@ export const en: Widen<typeof nl> = {
       items: [
         { q: 'Is it really free?', a: 'Yes. Free and without obligation.' },
         { q: 'What do I need to provide?', a: 'Only your website URL and your email address.' },
-        { q: 'When do I get the report?', a: 'In your inbox within [48 hours].' },
+        { q: 'When do I get the report?', a: 'In your inbox within 1 week.' },
         { q: 'What happens after the audit?', a: '[You decide whether to continue.]' },
       ],
     },
@@ -120,10 +126,6 @@ export const en: Widen<typeof nl> = {
       h1: 'A website that brings in customers, not just a business card.',
       sub: 'I design and build fast, clear websites for small and medium-sized businesses.',
       work: 'See my work',
-      cta: 'Request your free website audit',
-      panelTitle: 'Free audit',
-      panelText:
-        'Speed, mobile use and findability. 3 to 5 concrete improvements, in your inbox within [48 hours].',
       facts: [
         { big: 'Fixed price', small: 'no surprises', smallPhone: 'no surprises' },
         { big: 'SEO Optimized', small: 'Found on Google', smallPhone: 'Found on Google' },
@@ -152,7 +154,7 @@ export const en: Widen<typeof nl> = {
     why: {
       eyebrow: 'Why elvate',
       title: 'Not an agency. Just me.',
-      photoAlt: '[Photo of me]',
+      photoAlt: 'Portrait of Tom Van Hoof',
       items: [
         { title: 'Personal', text: 'You work directly with me, no middlemen.' },
         { title: 'Fast', text: 'Sites built for top speed. [Lighthouse scores after build]' },
@@ -162,7 +164,7 @@ export const en: Widen<typeof nl> = {
     steps: {
       eyebrow: 'How it works',
       title: 'Four steps',
-      timeBefore: 'Usually live within ',
+      timeBefore: 'Live as quick as ',
       time: '4 weeks',
       timeAfter: '.',
       items: [
@@ -174,12 +176,11 @@ export const en: Widen<typeof nl> = {
     },
     work: {
       eyebrow: 'My work',
-      title: 'Concept projects',
+      title: 'Projects',
       all: 'All projects →',
-      tag: 'Concept project',
       items: [
-        { title: 'Appliqué', line: 'Interior design. Website concept, logo and identity in natural colours that signal quality.', alt: '[Alt text: Appliqué website concept]' },
-        { title: 'BlackBean', line: 'Coffee roaster. Website concept in calm, muted colours that reflect the cosy atmosphere.', alt: '[Alt text: BlackBean website concept]' },
+        { title: 'Momentum Coaching', tag: 'Real website', line: 'Personal training. A light, sporty website with bold accent colours, deliberately different from the dark standard in the industry.', alt: 'Momentum Coaching website' },
+        { title: 'BlackBean', tag: 'Concept project', line: 'Coffee roaster. Website concept in calm, muted colours that reflect the cosy atmosphere.', alt: '[Alt text: BlackBean website concept]' },
       ],
       yoursTitle: 'Your project here?',
       yoursCta: 'Start with a free audit',
@@ -194,9 +195,9 @@ export const en: Widen<typeof nl> = {
       title: 'Fixed prices, from',
       from: 'from',
       plans: [
-        { name: 'Website', forWhom: 'You already have a logo and identity', price: '[€1,500]', includes: 'New site or redesign, up to ~5 pages, mobile, basic SEO, contact form, launch.' },
-        { name: 'Branding + Website', forWhom: "You're starting from scratch", price: '[€2,800]', includes: 'Logo, identity and everything in Website, up to ~8 pages.' },
-        { name: 'Web shop', forWhom: 'You want to sell online', price: '[€4,000]', includes: 'Everything above plus products, payments and shipping.' },
+        { name: 'Website', forWhom: 'You already have a logo and identity', price: '€1,000', includes: 'New site or redesign, up to ~5 pages, mobile, basic SEO, contact form, launch.' },
+        { name: 'Branding + Website', forWhom: "You're starting from scratch", price: '€2,000', includes: 'Logo, identity and everything in Website, up to ~8 pages.' },
+        { name: 'Web shop', forWhom: 'You want to sell online', price: '€4,000', includes: 'Everything above plus products, payments and shipping.' },
       ],
       addonsLabel: 'Add-ons',
       addons: 'Photos · Copywriting · Extra language · Advanced SEO · Maintenance plan',
@@ -207,12 +208,11 @@ export const en: Widen<typeof nl> = {
       eyebrow: 'FAQ',
       title: 'Frequently asked questions',
       items: [
-        { q: 'What does a website cost?', a: 'From [€1,500]. See the packages.' },
-        { q: 'How long does it take?', a: '4 weeks, depending on size.' },
-        { q: 'Who owns the website?', a: '[You, fully.]' },
-        { q: 'What if I want changes after launch?', a: 'Through a maintenance plan or as a one-off change.' },
-        { q: 'What do I need to provide to get started?', a: 'Texts, images and your wishes. I help where needed.' },
-        { q: 'Do you also work in French or Dutch?', a: '[Yes, an extra language is available as an add-on.]' },
+        { q: 'What does a website cost?', a: 'A website doesn\'t have to be expensive. A simple website can be yours for less than €1,000. Would you like multiple pages, a brand identity and a logo? That can be done for less than €1,500. Get in touch and we\'ll discuss together what\'s possible within your budget.' },
+        { q: 'How long does it take?', a: 'This depends heavily on the size of the website and how quickly we communicate. But it\'s possible to get a website online in less than 1 month. For more complex websites, the timeline depends on several factors. Get in touch and we\'ll work out how long it will take.' },
+        { q: 'Who owns the website?', a: 'The website is made to measure for you and will be your property. You can choose where and how to host it. If you want to change a few things in the future, get in touch and I\'ll find a solution.' },
+        { q: 'What if I want to change something after launch?', a: 'Either we build in a way during the creative process for you to edit and post certain content yourself, or you get in touch and we take care of a few small changes.' },
+        { q: 'What do I need to provide to get started?', a: 'You can start from scratch and together we\'ll build a plan to produce all the necessary content. Or you can start from an existing website that already has content, and we\'ll look at what can be reused. If you\'d rather provide the content yourself because you\'ve already worked with a graphic designer and only want the technical side done, that\'s definitely possible too.' },
       ],
     },
     closing: {
@@ -223,11 +223,11 @@ export const en: Widen<typeof nl> = {
   },
   workPage: {
     title: 'Work — elvate',
-    description: 'Concept projects: from brand to website.',
+    description: 'A real website for a personal trainer and a concept project.',
     eyebrow: 'Work',
     h1: 'My work',
     intro:
-      'Two concept projects: I made up the brief myself and developed it from brand to website. It shows how I think and design.',
+      'A real website for a personal trainer, and a concept project where I made up the brief myself. It shows how I think and design.',
     tag: 'Concept project',
     brief: 'The brief',
     audience: 'Audience',
@@ -250,7 +250,7 @@ export const en: Widen<typeof nl> = {
     h1: "Hi, I'm Tom.",
     intro:
       'I design and build fast, clear websites for small and medium-sized businesses in Belgium. On my own, with no agency in between.',
-    photoAlt: '[Photo of me]',
+    photoAlt: 'Portrait of Tom Van Hoof',
     drive: {
       eyebrow: 'What drives me',
       paras: [
@@ -288,7 +288,7 @@ export const en: Widen<typeof nl> = {
     vat: 'Company no.',
     auditEyebrow: 'Prefer an analysis first?',
     auditTitle: 'Request your free website audit →',
-    auditText: '3 to 5 improvements, within [48 hours].',
+    auditText: '3 to 5 improvements, within 1 week.',
     formTitle: 'Send a message',
   },
   legal: {

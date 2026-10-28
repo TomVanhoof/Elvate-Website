@@ -7,6 +7,7 @@ import PhotoPanel from './PhotoPanel.astro';
 import Button from './Button.astro';
 import { path, type Lang } from '../i18n/routes';
 import { t } from '../i18n';
+import portrait from '../assets/photos/portrait.jpg';
 import about1 from '../assets/photos/about-1.jpg';
 import about2 from '../assets/photos/about-2.jpg';
 import about3 from '../assets/photos/about-3.jpg';
@@ -19,7 +20,7 @@ const strip = [about1, about2, about3];
 ---
 <BaseLayout lang={lang} routeId="about" title={p.title} description={p.description}>
   <header class="container intro">
-    <PhotoPanel class="portrait" fallback="linear-gradient(180deg,#5d6468,#1f2427)" placeholder={p.photoAlt} scrim="transparent" />
+    <PhotoPanel class="portrait" image={portrait} alt={p.photoAlt} position="50% 30%" sizes="(min-width: 820px) 45vw, 100vw" widths={[640, 960, 1280, 1800]} eager scrim="transparent" />
     <div class="intro-copy">
       <Eyebrow text={p.eyebrow} />
       <h1 class="wide">{p.h1}</h1>

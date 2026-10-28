@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorkCase from './WorkCase.astro';
+import WorkRail from './WorkRail.astro';
 import Button from './Button.astro';
 import Eyebrow from './Eyebrow.astro';
 import { path, type Lang } from '../i18n/routes';
@@ -20,6 +21,8 @@ const cases = (await getCollection('work')).sort((a, b) => a.data.order - b.data
     </div>
     <p>{p.intro}</p>
   </header>
+
+  <WorkRail titles={[...cases.map((c) => c.data.title), p.slot.title]} />
 
   {cases.map((entry, i) => <WorkCase first={i === 0} entry={entry} lang={lang} tone={i % 2 === 1 ? 'surface' : 'bg'} />)}
 

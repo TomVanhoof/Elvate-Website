@@ -1,0 +1,74 @@
+---
+interface Props { titles: string[] }
+const { titles } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<div class="rail" aria-hidden="true" data-titles={JSON.stringify(titles)}>
+  <span class="rail-label" data-rail-label>{titles[0]}</span>
+  <span data-rail-current>01</span><span class="rail-line"></span><span>{pad(titles.length)}</span>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const ac = new AbortController();
+    const { signal } = ac;
+    document.addEventListener('astro:before-swap', () => ac.abort(), { once: true });
+
+    const rail = document.querySelector<HTMLElement>('.rail[data-titles]');
+    if (!rail) return;
+    const cur = rail.querySelector<HTMLElement>('[data-rail-current]')!;
+    const label = rail.querySelector<HTMLElement>('[data-rail-label]')!;
+    const titles: string[] = JSON.parse(rail.dataset.titles || '[]');
+    const cases = Array.from(document.querySelectorAll<HTMLElement>('article.case, .slot-wrap'));
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      rail.style.setProperty('--p', String(p));
+      const line = window.innerHeight * 0.4;
+      let active = 0;
+      cases.forEach((c, i) => { if (c.getBoundingClientRect().top <= line) active = i; });
+      const n = String(active + 1).padStart(2, '0');
+      if (cur.textContent !== n) {
+        cur.textContent = n;
+        label.textContent = titles[active] ?? '';
+        rail.classList.remove('is-tick');
+        void rail.offsetWidth;
+        rail.classList.add('is-tick');
+      }
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', onScroll, { passive: true, signal });
+    window.addEventListener('resize', onScroll, { signal });
+    update();
+  });
+</script>
+
+<style>
+  .rail { display: none; }
+
+  @media (min-width: 820px) {
+    .rail {
+      --p: 0;
+      display: flex; position: fixed; z-index: 50; pointer-events: none;
+      right: clamp(20px, 3vw, 44px); top: 50%; transform: translateY(-50%);
+      flex-direction: column; align-items: center; gap: 14px; font-size: 14px; font-weight: 600;
+      color: #fff; mix-blend-mode: difference;
+    }
+    .rail-label {
+      position: absolute; right: calc(100% + 12px); top: 0; white-space: nowrap;
+      font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .rail-line {
+      width: 2px; height: 200px;
+      background: linear-gradient(#fff calc(var(--p) * 100%), rgba(255,255,255,.3) calc(var(--p) * 100%));
+    }
+    .rail.is-tick [data-rail-current], .rail.is-tick .rail-label { animation: rail-tick .35s ease-out; }
+    @keyframes rail-tick { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .rail.is-tick [data-rail-current], .rail.is-tick .rail-label { animation: none; }
+    }
+  }
+</style>

@@ -23,7 +23,8 @@ import svcWebshops from '../assets/photos/service-webshops.jpg';
 import svcBranding from '../assets/photos/service-branding.jpg';
 import svcPhotos from '../assets/photos/service-photos.jpg';
 import auditBg from '../assets/photos/audit-bg.jpg';
-import projApplique from '../assets/photos/project-applique.jpg';
+import portrait from '../assets/photos/portrait.jpg';
+import projMomentum from '../assets/photos/project-momentum.jpg';
 import projBlackBean from '../assets/photos/project-blackbean.jpg';
 
 interface Props { lang: Lang }
@@ -49,8 +50,8 @@ const serviceFallbacks = [
   'linear-gradient(180deg,#4f5d55,#1a201c)',
   'linear-gradient(180deg,#6a7680,#22282c)',
 ];
-const projectImages = [projApplique, projBlackBean];
-const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gradient(160deg,#6e5b4d,#1f1814)'];
+const projectImages = [projMomentum, projBlackBean];
+const projectFallbacks = ['linear-gradient(160deg,#f2f2f2,#fcca82)', 'linear-gradient(160deg,#6e5b4d,#1f1814)'];
 ---
 <BaseLayout lang={lang} routeId="home" title={h.title} description={h.description} headerVariant="none">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
@@ -88,8 +89,10 @@ const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gra
     <div class="why">
       <PhotoPanel
         class="portrait"
-        fallback="linear-gradient(180deg,#5d6468,#1f2427)"
-        placeholder={h.why.photoAlt}
+        image={portrait}
+        alt={h.why.photoAlt}
+        position="50% 30%"
+        sizes="(min-width: 820px) 45vw, 100vw" widths={[640, 960, 1280, 1800]}
         scrim="transparent"
       />
       <div class="why-body">
@@ -135,7 +138,7 @@ const projectFallbacks = ['linear-gradient(160deg,#cfc2ab,#6d5d46)', 'linear-gra
           title={p.title}
           line={p.line}
           href={path('work', lang)}
-          tag={h.work.tag}
+          tag={p.tag}
           image={projectImages[i]}
           alt={p.alt}
           fallback={projectFallbacks[i]}

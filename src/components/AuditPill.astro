@@ -1,6 +1,7 @@
 ---
 import { path, type Lang, type RouteId } from '../i18n/routes';
 import { t } from '../i18n';
+import Button from './Button.astro';
 
 interface Props { lang: Lang; routeId?: RouteId }
 const { lang, routeId } = Astro.props;
@@ -8,25 +9,36 @@ const tr = t(lang);
 // On Home the audit section is on the same page; elsewhere the pill goes to the audit page.
 const href = routeId === 'home' ? '#audit' : path('audit', lang);
 ---
-<div class="pill" data-audit-pill hidden>
-  <a class="link wide" href={href}>
-    <span class="dot" aria-hidden="true"></span>{tr.pill.text} →
-  </a>
-  <button type="button" class="close" data-pill-close aria-label={tr.pill.close}>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-  </button>
+<div class="pill" data-audit-pill data-expanded hidden>
+  <div class="head">
+    <a class="link wide" href={href}>
+      <span class="dot" aria-hidden="true"></span>{tr.pill.text}
+    </a>
+    <button type="button" class="close" data-pill-close aria-label={tr.pill.close}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+  </div>
+  <div class="more">
+    <div class="more-inner">
+      <p>{tr.pill.body}</p>
+      <Button href={href} class="cta">{tr.pill.cta}</Button>
+    </div>
+  </div>
 </div>
 
 <style>
   .pill {
     position: fixed; z-index: 20; left: 12px; right: 12px; bottom: 12px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(16, 20, 23, .92);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, .12); border-radius: var(--radius-pill); padding: 4px;
+    background: rgba(16, 20, 23, .94);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border: 1px solid rgba(143, 211, 255, .35); border-radius: 22px; padding: 4px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .45);
+    animation: breathe 3.6s ease-in-out infinite;
+    transition: border-radius .3s ease;
   }
   .pill[hidden] { display: none; }
-  .link { display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 0 16px; font-size: 12px; font-weight: 700; flex: 1; }
+  .head { display: flex; align-items: center; justify-content: space-between; }
+  .link { display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 0 16px; font-size: 13px; font-weight: 700; flex: 1; }
   .dot { width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--accent); flex: none; }
   .close {
     width: var(--tap); height: var(--tap); border: 0; border-radius: var(--radius-pill);
@@ -34,13 +46,37 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
     display: inline-flex; align-items: center; justify-content: center;
   }
   .close:hover { color: var(--accent); }
+
+  /* Extra info slides open with the grid-rows trick, so no fixed height is needed. */
+  .more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+  /* Content hides at once on collapse and fades in only after the box has finished growing. */
+  .more-inner { overflow: hidden; padding: 0 16px; opacity: 0; transition: opacity .08s ease; }
+  .pill[data-expanded] .more, .pill:hover .more, .pill:focus-within .more { grid-template-rows: 1fr; }
+  .pill[data-expanded] .more-inner, .pill:hover .more-inner, .pill:focus-within .more-inner {
+    opacity: 1; transition: opacity .15s ease .35s;
+  }
+  .more p { margin: 4px 0 16px; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+  .pill :global(.cta) { width: 100%; margin-bottom: 16px; text-align: center; }
+
+  @keyframes breathe {
+    0%, 100% { box-shadow: 0 8px 28px rgba(0, 0, 0, .45), 0 0 0 0 rgba(143, 211, 255, 0); }
+    50% { box-shadow: 0 8px 28px rgba(0, 0, 0, .45), 0 0 22px 3px rgba(143, 211, 255, .28); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pill { animation: none; box-shadow: 0 0 14px rgba(143, 211, 255, .2); }
+    .more, .more-inner, .pill[data-expanded] .more-inner, .pill:hover .more-inner, .pill:focus-within .more-inner { transition: none; }
+  }
   @media (min-width: 820px) {
-    .pill { left: 20px; right: auto; bottom: 20px; }
-    .link { flex: none; }
+    .pill { left: 20px; right: auto; bottom: 20px; width: 240px; transition: width .35s ease, border-radius .3s ease; }
+    .pill[data-expanded], .pill:hover, .pill:focus-within { width: 360px; }
+    .link { flex: 1; white-space: nowrap; }
   }
 </style>
 
 <script>
+  // Module scope: survives client-side navigation, resets on a full refresh.
+  let closed = false;
+
   document.addEventListener('astro:page-load', () => {
     const ac = new AbortController();
     const { signal } = ac;
@@ -48,34 +84,18 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
 
     const pill = document.querySelector<HTMLElement>('[data-audit-pill]');
     if (pill) {
-      const KEY = 'elvate-pill-dismissed';
-      let closed = false;
-      try {
-        closed = sessionStorage.getItem(KEY) === '1';
-      } catch {}
-
       if (!closed) {
-        let pastHero = false;
         let formInView = false;
         const update = () => {
-          pill.hidden = closed || !pastHero || formInView;
+          pill.hidden = closed || formInView;
         };
 
-        // Show once the hero CTA has scrolled out of view. Pages without a hero CTA use a scroll distance.
-        const heroCta = document.querySelector('[data-hero-cta]');
-        if (heroCta) {
-          new IntersectionObserver(([entry]) => {
-            pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-            update();
-          }).observe(heroCta);
-        } else {
-          const onScroll = () => {
-            pastHero = window.scrollY > 600;
-            update();
-          };
-          window.addEventListener('scroll', onScroll, { passive: true, signal });
-          onScroll();
-        }
+        // Enlarged while at the top of the page, compact after scrolling. Hover/focus enlarge it via CSS.
+        const onScroll = () => {
+          pill.toggleAttribute('data-expanded', window.scrollY < 80);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true, signal });
+        onScroll();
 
         // Hide while an audit form is on screen.
         const visible = new Set<Element>();
@@ -88,11 +108,10 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
 
         pill.querySelector('[data-pill-close]')?.addEventListener('click', () => {
           closed = true;
-          try {
-            sessionStorage.setItem(KEY, '1');
-          } catch {}
           update();
         });
+
+        update();
       }
     }
   });

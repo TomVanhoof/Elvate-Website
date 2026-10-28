@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Tag from './Tag.astro';
 import { type Lang } from '../i18n/routes';
@@ -16,6 +16,18 @@ const lum = (hex: string) => {
   return 0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255);
 };
 const logoBg = [...d.colors].sort((a, b) => lum(b.hex) - lum(a.hex))[0]?.hex ?? '#fff';
+
+// Screens load on demand (see script): build avif/webp srcsets up to the source width, never upscaled.
+const SCREEN_SIZES = '(min-width: 1280px) 1152px, 100vw';
+const screens = await Promise.all(d.screens.map(async (s) => {
+  if (!s.image) return null;
+  const src = s.image;
+  const widths = [...new Set([800, 1200, src.width].filter((w) => w <= src.width))].sort((a, b) => a - b);
+  const srcset = async (format: 'avif' | 'webp') =>
+    (await Promise.all(widths.map(async (width) => `${(await getImage({ src, width, format })).src} ${width}w`))).join(', ');
+  const fallback = await getImage({ src, width: widths[widths.length - 1], format: 'webp' });
+  return { alt: s.alt[lang], width: src.width, height: src.height, avif: await srcset('avif'), webp: await srcset('webp'), fallback: fallback.src };
+}));
 const meta = [
   { label: tr.brief, text: d.brief[lang] },
   { label: tr.audience, text: d.audience[lang] },
@@ -54,7 +66,9 @@ const meta = [
         <div class="type-tiles">
           {d.logo && (
             <div class="logo-tile" style={`background:${logoBg}`}>
-              <Picture src={d.logo} alt={d.title} widths={[240, 480]} sizes="240px" formats={['webp']} loading="lazy" />
+              {d.logo.format === 'svg'
+                ? <img src={d.logo.src} alt={d.title} width={d.logo.width} height={d.logo.height} loading="lazy" class="logo-svg" />
+                : <Picture src={d.logo} alt={d.title} widths={[240, 480]} sizes="240px" formats={['webp']} loading="lazy" />}
             </div>
           )}
           <div class="font-tile"><span class="aa">Aa</span><span class="font-name">{d.font}</span></div>
@@ -65,9 +79,14 @@ const meta = [
     <div class="final">
       <h3 class="eyebrow">{tr.final}</h3>
       <div class="screens">
-        {d.screens.map((s) => (
+        {screens.map((s) => s && (
           <div class="screen">
-            {s.image && <Picture src={s.image} alt={s.alt[lang]} widths={[480, 800, 1000]} sizes="(min-width: 820px) 33vw, 100vw" formats={['avif', 'webp']} loading="lazy" />}
+            <picture data-lazy-picture>
+              <source type="image/avif" data-srcset={s.avif} sizes={SCREEN_SIZES} />
+              <source type="image/webp" data-srcset={s.webp} sizes={SCREEN_SIZES} />
+              <img alt={s.alt} width={s.width} height={s.height} decoding="async" data-fallback={s.fallback} />
+            </picture>
+            <noscript><img src={s.fallback} alt={s.alt} width={s.width} height={s.height} /></noscript>
           </div>
         ))}
       </div>
@@ -80,9 +99,9 @@ const meta = [
   .tone-surface { background: var(--surface); padding-block: var(--section-y); }
   .inner { display: flex; flex-direction: column; gap: 40px; }
 
-  .hero { position: relative; overflow: hidden; min-height: clamp(220px, 42vw, 620px); background: var(--surface-2); }
-  .hero :global(.hero-wrap) { position: absolute; inset: 0; display: block; }
-  .hero :global(.hero-img) { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .hero { position: relative; overflow: hidden; background: var(--surface-2); }
+  .hero :global(.hero-wrap) { display: block; }
+  .hero :global(.hero-img) { display: block; width: 100%; height: auto; }
   .hero :global(.tag-pos) { position: absolute; top: 16px; left: 16px; padding: 7px 11px; }
   @media (min-width: 820px) { .hero :global(.tag-pos) { top: 20px; left: 20px; } }
 
@@ -104,14 +123,55 @@ const meta = [
   .sw { display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--muted); }
   .sw span:first-child { height: 72px; border: 1px solid rgba(255, 255, 255, .12); }
   .type-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-  .logo-tile { height: 112px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .logo-tile { min-height: 112px; display: flex; align-items: center; justify-content: center; padding: 20px; }
   .logo-tile :global(img) { height: auto; width: auto; max-height: 72px; max-width: 100%; object-fit: contain; }
-  .font-tile { height: 112px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; padding: 16px; gap: 4px; }
+  .logo-tile :global(img.logo-svg) { width: 100%; max-width: 200px; max-height: none; }
+  .font-tile { min-height: 112px; border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center; padding: 16px; gap: 4px; }
   .aa { font-size: 30px; }
   .font-name { font-size: 12px; color: var(--muted); }
 
   .final { display: flex; flex-direction: column; gap: 16px; }
-  .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
-  .screen { aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-2); }
-  .screen :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .screens { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  .screen { background: var(--surface-2); }
+  .screen picture { display: block; }
+  .screen :global(img) { display: block; width: 100%; height: auto; }
+  /* Fade in once the image has loaded and scrolled into view. */
+  :global(html:not(.no-js)) .screen picture { opacity: 0; transform: translateY(28px); transition: opacity .7s ease-out, transform .7s ease-out; }
+  :global(html:not(.no-js)) .screen picture.is-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html:not(.no-js)) .screen picture { transform: none; transition: none; }
+  }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const pics = Array.from(document.querySelectorAll<HTMLElement>('picture[data-lazy-picture]'));
+    if (!pics.length) return;
+
+    // Nothing is fetched until the picture is close to the viewport.
+    const loader = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const pic = e.target as HTMLElement;
+        loader.unobserve(pic);
+        pic.querySelectorAll<HTMLSourceElement>('source[data-srcset]').forEach((s) => { s.srcset = s.dataset.srcset!; });
+        const img = pic.querySelector<HTMLImageElement>('img')!;
+        const done = () => { pic.dataset.loaded = '1'; reveal(pic); };
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+        img.src = img.dataset.fallback!;
+      }
+    }, { rootMargin: '300px 0px' });
+
+    // Fade in when scrolled into view, and only after the file has arrived.
+    const seen = new WeakSet<Element>();
+    const shown = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { seen.add(e.target); shown.unobserve(e.target); reveal(e.target as HTMLElement); }
+    }, { rootMargin: '0px 0px -12% 0px' });
+    const reveal = (pic: HTMLElement) => {
+      if (pic.dataset.loaded && seen.has(pic)) pic.classList.add('is-in');
+    };
+
+    pics.forEach((p) => { loader.observe(p); shown.observe(p); });
+  });
+</script>

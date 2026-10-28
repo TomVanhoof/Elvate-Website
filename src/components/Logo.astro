@@ -21,12 +21,16 @@ const inline = svg
     color: var(--accent);
     -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), #000 calc(var(--r) - 28px), transparent var(--r));
     mask-image: radial-gradient(circle at var(--x) var(--y), #000 calc(var(--r) - 28px), transparent var(--r));
-    transition: --r .7s ease-out;
+    /* Hidden at rest: Safari renders a zero-radius mask gradient as fully opaque. */
+    visibility: hidden;
+    transition: --r .7s ease-out, visibility 0s .7s;
   }
   @media (hover: hover) {
     :global(a:hover) > .logo-fx { --r: 260px; }
+    :global(a:hover) > .logo-fx .logo-ink { visibility: visible; transition: --r .7s ease-out, visibility 0s; }
   }
   :global(a:focus-visible) > .logo-fx { --r: 260px; }
+  :global(a:focus-visible) > .logo-fx .logo-ink { visibility: visible; transition: --r .7s ease-out, visibility 0s; }
   @media (prefers-reduced-motion: reduce) {
     .logo-ink { transition: none; }
   }
