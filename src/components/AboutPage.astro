@@ -9,8 +9,8 @@ import { path, type Lang } from '../i18n/routes';
 import { t } from '../i18n';
 import portrait from '../assets/photos/portrait.jpg';
 import about1 from '../assets/photos/about-1.jpg';
-import about2 from '../assets/photos/about-2.jpg';
-import about3 from '../assets/photos/about-3.jpg';
+import about2 from '../assets/photos/tom-vanhoof-flKeOpk6f_Q-unsplash.jpg';
+import about3 from '../assets/photos/tom-vanhoof-jHaGJ080Do0-unsplash.jpg';
 import ctaBg from '../assets/photos/hero.jpg';
 
 interface Props { lang: Lang }
@@ -40,7 +40,9 @@ const strip = [about1, about2, about3];
   <section class="strip" aria-label={p.stripLabel}>
     {strip.map((img, i) => (
       <div class="tile">
-        <Picture src={img} alt={p.stripAlts[i]} widths={[480, 800]} sizes="(min-width: 820px) 33vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
+        <a href="https://unsplash.com/@tomvh4" target="_blank" rel="noopener noreferrer">
+          <Picture src={img} alt={p.stripAlts[i]} widths={[480, 800]} sizes="(min-width: 820px) 33vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
+        </a>
       </div>
     ))}
   </section>
@@ -84,6 +86,7 @@ const strip = [about1, about2, about3];
 
   .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 4px; padding-block: 4px; }
   .tile { height: 360px; overflow: hidden; background: var(--surface-2); }
+  .tile a { display: block; width: 100%; height: 100%; }
   .tile :global(img) { width: 100%; height: 100%; object-fit: cover; }
 
   .how { display: flex; flex-wrap: wrap; gap: 48px; }

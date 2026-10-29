@@ -82,9 +82,9 @@ export const en: Widen<typeof nl> = {
       eyebrow: 'What you get',
       title: 'Three parts. 3 to 5 improvements.',
       items: [
-        { title: 'Speed', line: '[What you learn about this, in one sentence.]' },
-        { title: 'Mobile use', line: '[What you learn about this, in one sentence.]' },
-        { title: 'Findability', line: '[What you learn about this, in one sentence.]' },
+        { title: 'Speed', line: 'How fast your site loads and what slowness costs you: heavy images, bloated scripts, missing caching.' },
+        { title: 'Mobile use', line: 'How your site works on a phone: readable text, buttons you can hit with a thumb, and a menu that stays out of the way.' },
+        { title: 'Findability', line: 'Whether Google understands your site: titles, descriptions, structure and what you are missing to rank higher.' },
       ],
     },
     how: {
@@ -99,11 +99,15 @@ export const en: Widen<typeof nl> = {
     sample: {
       eyebrow: 'Example',
       title: 'What a report looks like',
-      text: '[Short explanation of the example report.]',
-      meta: 'Website audit · [examplecompany.be]',
+      text: 'A short, clear email without jargon. A score per part, then the key improvements in order of impact, each with what is wrong and how to fix it.',
+      meta: 'Website audit · examplecompany.be',
       scores: ['Speed', 'Mobile', 'Findability'],
-      points: ['[Improvement 1]', '[Improvement 2]', '[Improvement 3]'],
-      caption: '[Example report — replace with a real, anonymised audit]',
+      points: [
+        'Compress the images on the homepage: together they weigh 4 MB and slow loading down.',
+        'Make the "Request a quote" button bigger and place it higher on mobile.',
+        'Give every page its own title and description so Google displays them correctly.',
+      ],
+      caption: 'Fictional example for illustration. Your report is tailored to your own site.',
     },
     faq: {
       eyebrow: 'FAQ',
@@ -112,7 +116,7 @@ export const en: Widen<typeof nl> = {
         { q: 'Is it really free?', a: 'Yes. Free and without obligation.' },
         { q: 'What do I need to provide?', a: 'Only your website URL and your email address.' },
         { q: 'When do I get the report?', a: 'In your inbox within 1 week.' },
-        { q: 'What happens after the audit?', a: '[You decide whether to continue.]' },
+        { q: 'What happens after the audit?', a: 'You decide. You can tackle the points yourself, or I can help. No pressure and no obligation.' },
       ],
     },
     closing: { title: 'Ready for your improvements?', talk: 'Prefer to talk first?' },
@@ -179,7 +183,7 @@ export const en: Widen<typeof nl> = {
       title: 'Projects',
       all: 'All projects →',
       items: [
-        { title: 'Momentum Coaching', tag: 'Real website', line: 'Personal training. A light, sporty website with bold accent colours, deliberately different from the dark standard in the industry.', alt: 'Momentum Coaching website' },
+        { title: 'Momentum Coaching', tag: 'Light & sporty', line: 'Personal training. A light, sporty website with bold accent colours, deliberately different from the dark standard in the industry.', alt: 'Momentum Coaching website' },
         { title: 'BlackBean', tag: 'Concept project', line: 'Coffee roaster. Website concept in calm, muted colours that reflect the cosy atmosphere.', alt: '[Alt text: BlackBean website concept]' },
       ],
       yoursTitle: 'Your project here?',
@@ -236,6 +240,7 @@ export const en: Widen<typeof nl> = {
     typeLogo: 'Style guide — typography & logo',
     type: 'Style guide — typography',
     final: 'Final design',
+    visit: 'Visit website',
     slot: {
       eyebrow: 'Client projects',
       title: 'Your project here?',
@@ -254,9 +259,9 @@ export const en: Widen<typeof nl> = {
     drive: {
       eyebrow: 'What drives me',
       paras: [
-        '[Personal story: how you came to web design, in your own words.]',
-        '[Why you work for small and medium-sized businesses.]',
-        '[Something you do besides work. Your landscape photos, for example.]',
+        'I taught myself web design and development during my secondary school studies. I liked the mix of design and problem-solving. Over time I saw the same thing at many small businesses: a site that looks dated, loads slowly and doesn\'t bring in customers. I wanted to fix that properly.',
+        "I work with small and medium-sized businesses because that is where a good website changes the most. You don't need a big agency, a long process or a vague quote. You need a clear site, a fixed price and one person who answers your calls.",
+        "Away from the screen I'm usually outside with a camera. Fjords, mountains and quiet light are my favourite subjects. It trains the same eye I use for layout: what to leave out, and what deserves space.",
       ],
     },
     stripLabel: 'Photos',
@@ -293,19 +298,20 @@ export const en: Widen<typeof nl> = {
   },
   legal: {
     eyebrow: 'Legal',
-    updated: 'Last updated: [date]',
+    updated: 'Last updated: 29 October 2026',
     privacy: {
       title: 'Privacy — elvate',
       description: 'Privacy statement of elvate.',
       h1: 'Privacy statement',
       sections: [
-        { h: 'Who is responsible', p: ['elvate, [name], [address]. Company number BE 1013.537.063. Questions about your data: <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
+        { h: 'Who is responsible', p: ['elvate, Tom Vanhoof. Company number BE 1013.537.063. Questions about your data: <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
         {
           h: 'What data I collect',
           ul: [
             'Via the audit form: your website URL and your email address.',
             'Via the contact form: your name, email address, (optionally) your website and your message.',
-            '[Website statistics: which tool, which data — or delete if you use none.]',
+            'On every visit, our hosting provider receives technical data, such as your IP address, browser and the page requested. This happens automatically and I use it to keep the site secure and available.',
+            'Anonymous visitor statistics from Cloudflare Web Analytics. They work without cookies and without tracking you across websites.',
           ],
         },
         {
@@ -313,13 +319,14 @@ export const en: Widen<typeof nl> = {
           ul: [
             'To carry out your free website audit and email it to you.',
             'To answer your question or message.',
-            '[To prepare a quote, if you ask for one.]',
+            'To prepare a quote, if you ask for one.',
+            'To follow up on your request, for example with a question about your audit or quote. I do not use your email address for a newsletter without your separate consent.',
           ],
         },
-        { h: 'Legal basis', p: ['[Per processing: consent, or steps you request before a contract.]'] },
-        { h: 'How long I keep it', p: ['[Retention period per type of data.]'] },
-        { h: 'Who I share it with', p: ['I do not sell your data. [Service providers processing data: hosting, form service, email provider.]'] },
-        { h: 'Cookies', p: ['[Which cookies the site sets, or: this site sets no tracking cookies.]'] },
+        { h: 'Legal basis', p: ['Your consent, which you give by submitting the form and ticking the box. For a quote: steps you request before a contract. For following up on your request and for securing the site: my legitimate interest. You can withdraw your consent at any time via <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
+        { h: 'How long I keep it', p: ['Requests that do not lead to an assignment: 12 months at most. Client data: for as long as we work together, and invoices for 7 years under the statutory bookkeeping obligation. The hosting provider keeps technical hosting data according to its own retention periods.'] },
+        { h: 'Who I share it with', p: ['I do not sell your data. I work with service providers who process it on my behalf: Cloudflare (hosting and statistics), Web3Forms (forms), Google (Gmail and Google Drive) and Notion (follow-up of requests and clients). Some of these providers process data outside the European Economic Area. This happens on the basis of the European Commission\'s standard contractual clauses or an equivalent safeguard.'] },
+        { h: 'Cookies', p: ['This site sets no cookies and uses no tracking. If that changes, I will update this statement and ask for your consent where required.'] },
         {
           h: 'Your rights',
           p: ['You have the right to access, correct or delete your data, restrict processing, object and port your data. Email <a href="mailto:info@elvate.be">info@elvate.be</a> for this. If you are not satisfied with how I handle your data, you can file a complaint with the Data Protection Authority.'],
@@ -331,14 +338,23 @@ export const en: Widen<typeof nl> = {
       description: 'Terms and conditions of elvate.',
       h1: 'Terms and conditions',
       sections: [
-        { h: 'Scope', p: ['These terms apply to every quote and assignment of elvate, [name], company number BE 1013.537.063.'] },
-        { h: 'Quote and price', p: ['You receive a fixed price and a fixed schedule up front. [Validity of a quote, what falls outside the price.]'] },
-        { h: 'Schedule and feedback', p: ['[Number of feedback rounds, what you supply (texts, images) and when, what happens in case of delay.]'] },
-        { h: 'Payment', p: ['[Deposit, payment terms, what happens on late payment.]'] },
-        { h: 'Ownership', p: ['[Who owns the website, the design and the source code after full payment.]'] },
-        { h: 'Hosting and maintenance', p: ['[What is included after launch, and what the maintenance plan covers.]'] },
-        { h: 'Liability', p: ['[Limitation of liability.]'] },
-        { h: 'Governing law', p: ['[Belgian law; competent court.]'] },
+        { h: 'Scope', p: ['These terms and conditions apply to both the delivery of services and the sale of goods.'] },
+        { h: 'Acceptance', p: ['The terms and conditions are deemed to have been accepted by the customer by completing the order form or placing an order.'] },
+        {
+          h: 'Payment and compensation',
+          p: ['In the event of total or partial non-payment by the customer within 14 calendar days (+ three working days if not by electronic means) after sending the first payment reminder, the outstanding amount will automatically and without further notice be increased by:'],
+          ul: [
+            '€20 if the amount due is less than or equal to €150;',
+            '€30 plus 10% of the amount due above €150;',
+            '€65 plus 5% of the amount due above €500, with a total limit of €2.000.',
+          ],
+        },
+        { h: 'Interest', p: ['In the absence of full payment by the customer within 14 calendar days (+ three working days if not by electronic means) of the sending of the first payment reminder, the customer shall automatically and without formal notice be liable for interest at the legal rate for late payment in commercial transactions, cf. article 5, paragraph 2 of the Law of August 2, 2002 on combating late payment in commercial transactions. This interest shall be calculated on the sum still to be paid.'] },
+        { h: 'Complaints', p: ['Complaints must be made by the customer by registered mail within 8 days of the invoice date.'] },
+        { h: 'Ownership and risk', p: ['As long as goods and services delivered have not been paid for in full they remain the property of the seller. Nevertheless, all the risks linked to the goods and services sold are transferred to the purchaser from the moment of delivery.'] },
+        { h: 'Subscriptions', p: ['Subscriptions are renewed automatically, unless the subscription is terminated in writing on time, being at least one (1) month before the expiry of the term.'] },
+        { h: 'Termination', p: ['If the customer fails to meet his obligations, including his obligation to pay on time, we are entitled to stop further deliveries and services and to consider the agreement terminated by law and without further notice.'] },
+        { h: 'Competent courts', p: ['In the event of a dispute only the authorized courts of the jurisdiction shall have the jurisdiction.'] },
       ],
     },
   },

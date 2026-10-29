@@ -2,6 +2,7 @@
 import { Picture, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Tag from './Tag.astro';
+import linkIcon from '../assets/link.svg';
 import { type Lang } from '../i18n/routes';
 import { t } from '../i18n';
 
@@ -44,7 +45,14 @@ const meta = [
     </div>
 
     <div class="title-row">
-      <h2 class="wide">{d.title}</h2>
+      <div class="title-link">
+        <h2 class="wide">{d.title}</h2>
+        {d.url && (
+          <a class="arrow" href={d.url} target="_blank" rel="noopener noreferrer" aria-label={`${tr.visit}: ${d.title}`}>
+            <img src={linkIcon.src} alt="" width="52" height="52" class="arrow-icon" />
+          </a>
+        )}
+      </div>
       <span class="type">{d.type[lang]}</span>
     </div>
 
@@ -107,6 +115,10 @@ const meta = [
 
   .title-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
   h2 { margin: 0; font-size: clamp(30px, 3.6vw, 52px); font-weight: 700; }
+  .title-link { display: flex; align-items: center; gap: 16px; }
+  .arrow { display: inline-flex; color: #fff; transition: transform .15s ease; }
+  .arrow:hover { color: #fff; transform: translate(2px, -2px); }
+  .arrow-icon { display: block; width: clamp(32px, 3.6vw, 52px); height: clamp(32px, 3.6vw, 52px); }
   .type { font-size: 15px; color: var(--muted); }
 
   .meta {

@@ -24,8 +24,8 @@ import svcBranding from '../assets/photos/service-branding.jpg';
 import svcPhotos from '../assets/photos/service-photos.jpg';
 import auditBg from '../assets/photos/audit-bg.jpg';
 import portrait from '../assets/photos/portrait.jpg';
-import projMomentum from '../assets/photos/project-momentum.jpg';
-import projBlackBean from '../assets/photos/project-blackbean.jpg';
+import projMomentum from '../assets/work/momentum-home.png';
+import projBlackBean from '../assets/work/Blackbean full.jpg';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -137,7 +137,7 @@ const projectFallbacks = ['linear-gradient(160deg,#f2f2f2,#fcca82)', 'linear-gra
         <ProjectCard
           title={p.title}
           line={p.line}
-          href={path('work', lang)}
+          href={projectImages[i] === projBlackBean ? `${path('work', lang)}#blackbean` : path('work', lang)}
           tag={p.tag}
           image={projectImages[i]}
           alt={p.alt}

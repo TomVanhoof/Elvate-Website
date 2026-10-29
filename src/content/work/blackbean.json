@@ -2,40 +2,42 @@
   "order": 2,
   "title": "BlackBean",
   "type": {
-    "nl": "Koffiebrander · Website-concept",
-    "en": "Coffee roaster · Website concept"
+    "nl": "Koffiebar · Website-concept",
+    "en": "Coffee shop · Website concept"
   },
   "concept": true,
   "brief": {
-    "nl": "[De brief die ik bedacht, in twee zinnen.]",
-    "en": "[The brief I made up, in two sentences.]"
+    "nl": "Een conceptwebsite voor een fictieve koffiebar in het hart van Antwerpen. Het doel: bezoekers laten voelen hoe het is om er binnen te stappen, nog voor ze er zijn.",
+    "en": "A concept website for a fictional coffee shop in the heart of Antwerp. The goal: let visitors feel what it's like to step inside before they ever arrive."
   },
   "audience": {
-    "nl": "[Voor wie de site is.]",
-    "en": "[Who the site is for.]"
+    "nl": "Mensen op zoek naar hun volgende lokale koffieplek: voor een rustige pauze, een afspraak met vrienden of een werkmomentje met een goede kop koffie.",
+    "en": "People looking for their next local coffee spot: for a quiet break, a catch-up with friends or a work session over a good cup of coffee."
   },
   "decisions": {
-    "nl": "Rustige, gedempte kleuren die de gezellige sfeer weerspiegelen. [Verdere keuzes.]",
-    "en": "Calm, muted colours that reflect the cosy atmosphere. [Further choices.]"
+    "nl": "Rustige, aardse kleuren die je terugvindt in de foto's van het oogsten en branden van de bonen: warm crème, koffiebruin, wijnrood, diepgroenblauw en een gouden accent. Een serif-lettertype voor karakter in de titels, een zacht en leesbaar lettertype voor de tekst.",
+    "en": "Calm, earthy colours you find in photos of harvesting and roasting the beans: warm cream, coffee brown, wine red, deep teal and a golden accent. A serif for character in the headings, a soft and readable typeface for body text."
   },
   "colors": [
-    { "hex": "#F9F2EA" },
+    { "hex": "#F9F2EB" },
+    { "hex": "#EDE5DB" },
     { "hex": "#7B3537" },
     { "hex": "#07545E" },
     { "hex": "#D2872C" },
-    { "hex": "#49230E" },
+    { "hex": "#4A230F" },
     { "hex": "#0B0B0B" }
   ],
-  "font": "[Lettertype]",
+  "font": "Yeseva One, Raleway",
   "logo": "../../assets/work/blackbean-logo.png",
-  "hero": "../../assets/work/blackbean-hero.jpg",
+  "hero": "../../assets/work/Blackbean hero.jpg",
   "heroAlt": {
-    "nl": "[Alt-tekst: hero-screen van de BlackBean-website]",
-    "en": "[Alt text: hero screen of the BlackBean website]"
+    "nl": "Startpagina van BlackBean: de kop 'Kom tot rust... met koffie' op een gouden vorm, naast foto's van espresso, ijskoffie en latte art.",
+    "en": "Home page of BlackBean: the headline 'Kom tot rust... met koffie' on a golden shape, next to photos of espresso, iced coffee and latte art."
   },
   "screens": [
-    { "image": "../../assets/work/blackbean-1.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, bonen]", "en": "[Alt text: BlackBean, beans]" } },
-    { "image": "../../assets/work/blackbean-2.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, koffie]", "en": "[Alt text: BlackBean, coffee]" } },
-    { "image": "../../assets/work/blackbean-3.jpg", "alt": { "nl": "[Alt-tekst: BlackBean, blog]", "en": "[Alt text: BlackBean, blog]" } }
+    { "image": "../../assets/work/Blackbean-1.jpg", "alt": { "nl": "BlackBean, herkomst van de bonen: Brazilië, Vietnam en Colombia", "en": "BlackBean, bean origins: Brazil, Vietnam and Colombia" } },
+    { "image": "../../assets/work/Blackbean-2.jpg", "alt": { "nl": "BlackBean, koffiesectie 'Proef onze koffie' met drie drankjes", "en": "BlackBean, 'Proef onze koffie' section with three drinks" } },
+    { "image": "../../assets/work/Blackbean-3.jpg", "alt": { "nl": "BlackBean, over ons: koffie sinds 1989 in het hart van Antwerpen", "en": "BlackBean, about us: coffee since 1989 in the heart of Antwerp" } },
+    { "image": "../../assets/work/Blackbean-4.jpg", "alt": { "nl": "BlackBean, blog met drie nieuwsberichten", "en": "BlackBean, blog with three news posts" } }
   ]
 }

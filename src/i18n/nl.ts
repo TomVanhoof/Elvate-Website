@@ -76,9 +76,9 @@ export const nl = {
       eyebrow: 'Wat je krijgt',
       title: 'Drie onderdelen. 3 tot 5 verbeterpunten.',
       items: [
-        { title: 'Snelheid', line: '[Wat je hierover te weten komt, in één zin.]' },
-        { title: 'Mobiel gebruik', line: '[Wat je hierover te weten komt, in één zin.]' },
-        { title: 'Vindbaarheid', line: '[Wat je hierover te weten komt, in één zin.]' },
+        { title: 'Snelheid', line: 'Hoe snel je site laadt en wat bezoekers kost: trage afbeeldingen, zware scripts, ontbrekende caching.' },
+        { title: 'Mobiel gebruik', line: 'Hoe je site werkt op een smartphone: leesbaarheid, knoppen die je met je duim raakt, en een menu dat niet in de weg zit.' },
+        { title: 'Vindbaarheid', line: 'Of Google je site goed begrijpt: titels, beschrijvingen, structuur en wat je mist om hoger te scoren.' },
       ],
     },
     how: {
@@ -93,11 +93,15 @@ export const nl = {
     sample: {
       eyebrow: 'Voorbeeld',
       title: 'Zo ziet een rapport eruit',
-      text: '[Korte uitleg bij het voorbeeldrapport.]',
-      meta: 'Website-audit · [voorbeeldbedrijf.be]',
+      text: 'Een korte, duidelijke mail zonder jargon. Per onderdeel een score, daarna de belangrijkste verbeterpunten in volgorde van impact, met telkens wat er mis is en hoe je het oplost.',
+      meta: 'Website-audit · voorbeeldbedrijf.be',
       scores: ['Snelheid', 'Mobiel', 'Vindbaarheid'],
-      points: ['[Verbeterpunt 1]', '[Verbeterpunt 2]', '[Verbeterpunt 3]'],
-      caption: '[Voorbeeldrapport — vervang door een echte, geanonimiseerde audit]',
+      points: [
+        "Verklein de afbeeldingen op de startpagina: ze zijn samen 4 MB en vertragen het laden.",
+        'Maak de knop "Offerte aanvragen" groter en zet hem hoger op mobiel.',
+        'Geef elke pagina een eigen titel en beschrijving, zodat Google ze correct toont.',
+      ],
+      caption: 'Fictief voorbeeld ter illustratie. Jouw rapport is op maat van je eigen site.',
     },
     faq: {
       eyebrow: 'FAQ',
@@ -106,7 +110,7 @@ export const nl = {
         { q: 'Is het echt gratis?', a: 'Ja. Gratis en zonder verplichtingen.' },
         { q: 'Wat moet ik aanleveren?', a: 'Enkel je website-URL en je e-mailadres.' },
         { q: 'Wanneer krijg ik het rapport?', a: 'Binnen 1 week in je mailbox.' },
-        { q: 'Wat gebeurt er na de audit?', a: '[Jij beslist of je ermee verder wil.]' },
+        { q: 'Wat gebeurt er na de audit?', a: 'Jij beslist. Je kan de punten zelf aanpakken, of ik help je ermee. Geen druk en geen verplichting.' },
       ],
     },
     closing: { title: 'Klaar voor je verbeterpunten?', talk: 'Liever eerst praten?' },
@@ -173,7 +177,7 @@ export const nl = {
       title: 'Projecten',
       all: 'Alle projecten →',
       items: [
-        { title: 'Momentum Coaching', tag: 'Echte website', line: 'Personal training. Een lichte, sportieve website met opvallende accentkleuren, bewust anders dan de donkere standaard in de sector.', alt: 'Website van Momentum Coaching' },
+        { title: 'Momentum Coaching', tag: 'Licht & sportief', line: 'Personal training. Een lichte, sportieve website met opvallende accentkleuren, bewust anders dan de donkere standaard in de sector.', alt: 'Website van Momentum Coaching' },
         { title: 'BlackBean', tag: 'Conceptproject', line: 'Koffiebrander. Website-concept in rustige, gedempte kleuren die de gezellige sfeer weerspiegelen.', alt: '[Alt-tekst: website-concept BlackBean]' },
       ],
       yoursTitle: 'Jouw project hier?',
@@ -230,6 +234,7 @@ export const nl = {
     typeLogo: 'Stijlgids — typografie & logo',
     type: 'Stijlgids — typografie',
     final: 'Eindontwerp',
+    visit: 'Bekijk de website',
     slot: {
       eyebrow: 'Klantprojecten',
       title: 'Jouw project hier?',
@@ -248,9 +253,9 @@ export const nl = {
     drive: {
       eyebrow: 'Wat me drijft',
       paras: [
-        '[Persoonlijk verhaal: hoe je bij webdesign kwam, in jouw eigen woorden.]',
-        '[Waarom je voor kleine en middelgrote bedrijven werkt.]',
-        "[Iets wat je naast je werk doet. Je landschapsfoto's, bijvoorbeeld.]",
+        "Webdesign en webontwikkeling leerde ik mezelf aan tijdens mijn middelbare studies. Ik hield van de mix van design en problemen oplossen. Gaandeweg zag ik bij veel kleine bedrijven hetzelfde: een site die verouderd oogt, traag laadt en geen klanten oplevert. Dat wilde ik goed aanpakken.",
+        "Ik werk voor kleine en middelgrote bedrijven omdat een goede website daar het meeste verschil maakt. Je hebt geen groot bureau, geen lang traject en geen vage offerte nodig. Je hebt een duidelijke site nodig, een vaste prijs en één persoon die je telefoon opneemt.",
+        "Weg van het scherm ben ik meestal buiten met een camera. Fjorden, bergen en rustig licht zijn mijn favoriete onderwerpen. Het traint dezelfde blik die ik voor lay-out gebruik: wat laat je weg, en wat verdient ruimte.",
       ],
     },
     stripLabel: "Foto's",
@@ -287,19 +292,20 @@ export const nl = {
   },
   legal: {
     eyebrow: 'Juridisch',
-    updated: 'Laatst bijgewerkt: [datum]',
+    updated: 'Laatst bijgewerkt: 29 oktober 2026',
     privacy: {
       title: 'Privacy — elvate',
       description: 'Privacyverklaring van elvate.',
       h1: 'Privacyverklaring',
       sections: [
-        { h: 'Wie is verantwoordelijk', p: ['elvate, [naam], [adres]. Ondernemingsnummer BE 1013.537.063. Vragen over je gegevens: <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
+        { h: 'Wie is verantwoordelijk', p: ['elvate, Tom Vanhoof. Ondernemingsnummer BE 1013.537.063. Vragen over je gegevens: <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
         {
           h: 'Welke gegevens ik verzamel',
           ul: [
             'Via het auditformulier: je website-URL en je e-mailadres.',
             'Via het contactformulier: je naam, e-mailadres, (optioneel) je website en je bericht.',
-            '[Websitestatistieken: welke tool, welke gegevens — of schrappen als je er geen gebruikt.]',
+            'Bij elk bezoek ontvangt onze hostingprovider technische gegevens, zoals je IP-adres, browser en de opgevraagde pagina. Dit gebeurt automatisch en ik gebruik het om de site veilig en beschikbaar te houden.',
+            'Anonieme bezoekersstatistieken van Cloudflare Web Analytics. Die werken zonder cookies en zonder je te volgen over websites heen.',
           ],
         },
         {
@@ -307,13 +313,14 @@ export const nl = {
           ul: [
             'Om je gratis website-audit uit te voeren en naar je te mailen.',
             'Om je vraag of bericht te beantwoorden.',
-            '[Om een offerte op te maken, als je daarom vraagt.]',
+            'Om een offerte op te maken, als je daarom vraagt.',
+            'Om je op te volgen over je aanvraag, bijvoorbeeld met een vraag over je audit of offerte. Ik gebruik je e-mailadres niet voor een nieuwsbrief zonder je aparte toestemming.',
           ],
         },
-        { h: 'Rechtsgrond', p: ['[Per verwerking: toestemming, of stappen die je vraagt vóór een overeenkomst.]'] },
-        { h: 'Hoe lang ik ze bewaar', p: ['[Bewaartermijn per soort gegevens.]'] },
-        { h: 'Met wie ik ze deel', p: ['Ik verkoop je gegevens niet. [Dienstverleners die gegevens verwerken: hosting, formulierendienst, e-mailprovider.]'] },
-        { h: 'Cookies', p: ['[Welke cookies de site plaatst, of: deze site plaatst geen tracking-cookies.]'] },
+        { h: 'Rechtsgrond', p: ['Je toestemming, die je geeft door het formulier te versturen en het vakje aan te vinken. Voor een offerte: stappen die je vraagt vóór een overeenkomst. Voor opvolging van je aanvraag en voor de beveiliging van de site: mijn gerechtvaardigd belang. Je kan je toestemming altijd intrekken via <a href="mailto:info@elvate.be">info@elvate.be</a>.'] },
+        { h: 'Hoe lang ik ze bewaar', p: ['Aanvragen die niet tot een opdracht leiden: maximaal 12 maanden. Gegevens van klanten: zolang de samenwerking duurt, en facturen 7 jaar wegens de wettelijke boekhoudplicht. Technische gegevens bij het hosten bewaart de hostingprovider volgens eigen termijnen.'] },
+        { h: 'Met wie ik ze deel', p: ['Ik verkoop je gegevens niet. Ik werk met dienstverleners die ze namens mij verwerken: Cloudflare (hosting en statistieken), Web3Forms (formulieren), Google (Gmail en Google Drive) en Notion (opvolging van aanvragen en klanten). Sommige van deze partijen verwerken gegevens buiten de Europese Economische Ruimte. Dat gebeurt op basis van de standaardcontractbepalingen van de Europese Commissie of een gelijkwaardige waarborg.'] },
+        { h: 'Cookies', p: ['Deze site plaatst geen cookies en gebruikt geen tracking. Verandert dat, dan pas ik deze verklaring aan en vraag ik je waar nodig toestemming.'] },
         {
           h: 'Jouw rechten',
           p: ['Je hebt het recht om je gegevens in te kijken, te laten verbeteren of verwijderen, de verwerking te laten beperken, bezwaar te maken en je gegevens over te dragen. Mail daarvoor naar <a href="mailto:info@elvate.be">info@elvate.be</a>. Ben je niet tevreden over hoe ik met je gegevens omga, dan kan je klacht indienen bij de Gegevensbeschermingsautoriteit.'],
@@ -325,14 +332,23 @@ export const nl = {
       description: 'Algemene voorwaarden van elvate.',
       h1: 'Algemene voorwaarden',
       sections: [
-        { h: 'Toepassing', p: ['Deze voorwaarden gelden voor elke offerte en opdracht van elvate, [naam], ondernemingsnummer BE 1013.537.063.'] },
-        { h: 'Offerte en prijs', p: ['Je krijgt vooraf een vaste prijs en een vaste planning. [Geldigheid van een offerte, wat er buiten de prijs valt.]'] },
-        { h: 'Planning en feedback', p: ['[Aantal feedbackrondes, wat je aanlevert (teksten, beelden) en wanneer, wat er gebeurt bij vertraging.]'] },
-        { h: 'Betaling', p: ['[Voorschot, betalingstermijnen, wat bij laattijdige betaling.]'] },
-        { h: 'Eigendom', p: ['[Wie eigenaar is van de website, het ontwerp en de broncode na volledige betaling.]'] },
-        { h: 'Hosting en onderhoud', p: ['[Wat inbegrepen is na de lancering, en wat het onderhoudsplan omvat.]'] },
-        { h: 'Aansprakelijkheid', p: ['[Beperking van aansprakelijkheid.]'] },
-        { h: 'Toepasselijk recht', p: ['[Belgisch recht; bevoegde rechtbank.]'] },
+        { h: 'Toepassing', p: ['Deze algemene voorwaarden zijn zowel van toepassing op de leveringen van diensten als op de verkoop van goederen.'] },
+        { h: 'Aanvaarding', p: ['De algemene voorwaarden worden door het invullen van de bestelbon of het geven van een opdracht door de klant als aanvaard beschouwd.'] },
+        {
+          h: 'Betaling en schadevergoeding',
+          p: ['Bij gebrek aan volledige betaling door de klant binnen de 14 kalenderdagen (+ drie werkdagen indien niet via elektronische weg) na verzending van de eerste betalingsherinnering is er van rechtswege en zonder ingebrekestelling een schadevergoeding verschuldigd van:'],
+          ul: [
+            '€20 als het verschuldigde bedrag lager dan of gelijk is aan €150;',
+            '€30 vermeerderd met 10% van het verschuldigde bedrag boven de €150;',
+            '€65 vermeerderd met 5% van het verschuldigde bedrag boven de €500, met een totaallimiet van €2.000.',
+          ],
+        },
+        { h: 'Intresten', p: ['Bij gebrek aan volledige betaling door de klant binnen de 14 kalenderdagen (+ drie werkdagen indien niet via elektronische weg) na verzending van de eerste betalingsherinnering is de klant van rechtswege en zonder ingebrekestelling een interest verschuldigd ten belope van de wettelijke rentevoet voor betalingsachterstand bij handelstransactie, zie artikel 5, lid 2 van de wet van 2 augustus 2002 betreffende de bestrijding van de betalingsachterstand bij handelstransacties. Deze interesten worden berekend op de nog te betalen som.'] },
+        { h: 'Klachten', p: ['Klachten moeten door de klant gebeuren binnen de 8 dagen van factuurdatum.'] },
+        { h: 'Eigendom en risico', p: ['Zolang geleverde goederen en diensten niet volledig zijn betaald, blijven zij eigendom van de verstrekker. Niettemin gaan alle risico\'s gekoppeld aan de verkochte goederen en diensten over op de koper vanaf het ogenblik van levering.'] },
+        { h: 'Abonnementen', p: ['Abonnementen worden automatisch verlengd, tenzij het abonnement op tijd schriftelijk wordt opgezegd, zijnde tenminste één (1) maand voor de afloop van de termijn.'] },
+        { h: 'Ontbinding', p: ['Indien de klant zijn verplichtingen, onder meer betalingsverplichting, niet tijdig nakomt, zijn wij gerechtigd om verdere leveringen en diensten stop te zetten en de overeenkomst van rechtswege en zonder ingebrekestelling als ontbonden te beschouwen.'] },
+        { h: 'Bevoegde rechtbank', p: ['Ingeval van betwisting zijn alleen de daartoe bevoegde rechtbanken van het rechtsgebied bevoegd.'] },
       ],
     },
   },

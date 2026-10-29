@@ -21,7 +21,7 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
   <div class="more">
     <div class="more-inner">
       <p>{tr.pill.body}</p>
-      <Button href={href} class="cta">{tr.pill.cta}</Button>
+      <Button href={href} class="pill-cta">{tr.pill.cta}</Button>
     </div>
   </div>
 </div>
@@ -40,11 +40,13 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
   .head { display: flex; align-items: center; justify-content: space-between; }
   .link { display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 0 16px; font-size: 13px; font-weight: 700; flex: 1; }
   .dot { width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--accent); flex: none; }
+  /* Close button only exists while the pill is enlarged; collapsed it takes no space. */
   .close {
-    width: var(--tap); height: var(--tap); border: 0; border-radius: var(--radius-pill);
+    display: none; flex: none; width: var(--tap); height: var(--tap); border: 0; border-radius: var(--radius-pill);
     background: transparent; color: #fff; cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center;
+    align-items: center; justify-content: center;
   }
+  .pill[data-expanded] .close, .pill:hover .close, .pill:focus-within .close { display: inline-flex; }
   .close:hover { color: var(--accent); }
 
   /* Extra info slides open with the grid-rows trick, so no fixed height is needed. */
@@ -56,7 +58,7 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
     opacity: 1; transition: opacity .15s ease .35s;
   }
   .more p { margin: 4px 0 16px; font-size: 14px; line-height: 1.55; color: var(--text-2); }
-  .pill :global(.cta) { width: 100%; margin-bottom: 16px; text-align: center; }
+  .pill :global(.pill-cta) { width: 100%; margin-bottom: 16px; text-align: center; }
 
   @keyframes breathe {
     0%, 100% { box-shadow: 0 8px 28px rgba(0, 0, 0, .45), 0 0 0 0 rgba(143, 211, 255, 0); }
@@ -67,7 +69,7 @@ const href = routeId === 'home' ? '#audit' : path('audit', lang);
     .more, .more-inner, .pill[data-expanded] .more-inner, .pill:hover .more-inner, .pill:focus-within .more-inner { transition: none; }
   }
   @media (min-width: 820px) {
-    .pill { left: 20px; right: auto; bottom: 20px; width: 240px; transition: width .35s ease, border-radius .3s ease; }
+    .pill { left: 20px; right: auto; bottom: 20px; width: 280px; transition: width .35s ease, border-radius .3s ease; }
     .pill[data-expanded], .pill:hover, .pill:focus-within { width: 360px; }
     .link { flex: 1; white-space: nowrap; }
   }

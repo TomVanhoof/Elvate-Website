@@ -13,6 +13,7 @@ const work = defineCollection({
       title: z.string(),
       type: bilingual,
       concept: z.boolean().default(true),
+      url: z.string().url().optional(),
       brief: bilingual,
       audience: bilingual,
       decisions: bilingual,
