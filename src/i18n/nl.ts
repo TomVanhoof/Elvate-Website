@@ -155,7 +155,7 @@ export const nl = {
       photoAlt: 'Portret van Tom Van Hoof',
       items: [
         { title: 'Persoonlijk', text: 'Je werkt rechtstreeks met mij, geen tussenpersonen.' },
-        { title: 'Snel', text: 'Sites gebouwd voor topsnelheid. [Lighthouse-scores na build]' },
+        { title: 'Snel', text: 'Sites gebouwd voor topsnelheid. Lighthouse: 99 mobiel, 100 desktop. Toegankelijkheid, best practices en SEO overal 100.' },
         { title: 'Duidelijk', text: 'Vaste prijs, vaste planning, geen verrassingen.' },
       ],
     },
